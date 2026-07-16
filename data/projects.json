@@ -1,0 +1,836 @@
+[
+    {
+        "id": 1,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-01.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 2,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-02.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 3,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-03.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 4,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-04.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 5,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-05.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 6,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-06.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 7,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-07.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 8,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-08.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 9,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-09.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 10,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-10.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 11,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-11.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 12,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-12.png",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 13,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-13.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 14,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-14.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 15,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-15.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 16,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-16.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 17,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-17.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 18,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-18.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 19,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-19.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 20,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-20.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 21,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-21.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 22,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-22.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 23,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-23.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 24,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-24.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 25,
+        "category": "brainrot",
+        "image": "/assets/thumbnails/brainrot-25.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 26,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-01.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 27,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-02.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 28,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-03.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 29,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-04.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 30,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-05.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 31,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-06.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 32,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-07.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 33,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-08.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 34,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-09.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 35,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-10.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 36,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-11.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 37,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-12.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 38,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-13.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 39,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-14.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 40,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-15.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 41,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-16.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 42,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-17.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 43,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-18.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 44,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-19.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 45,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-20.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 46,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-21.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 47,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-22.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 48,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-23.png",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 49,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-24.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 50,
+        "category": "pvp",
+        "image": "/assets/thumbnails/pvp-25.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 51,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-01.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 52,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-02.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 53,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-03.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 54,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-04.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 55,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-05.jpeg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 56,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-06.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 57,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-07.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 58,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-08.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 59,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-09.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 60,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-10.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 61,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-11.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 62,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-12.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 63,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-13.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 64,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-14.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 65,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-15.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 66,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-16.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 67,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-17.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 68,
+        "category": "vehicles",
+        "image": "/assets/thumbnails/car-18.jpg",
+        "alt": "Fortnite cars and vehicles thumbnail"
+    },
+    {
+        "id": 69,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-01.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 70,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-02.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 71,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-03.png",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 72,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-04.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 73,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-05.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 74,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-06.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 75,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-07.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 76,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-08.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 78,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-10.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 79,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-11.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 80,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-12.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 81,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-13.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 82,
+        "category": "tycoon",
+        "image": "/assets/thumbnails/tycoon-14.jpg",
+        "alt": "Fortnite and UEFN thumbnail"
+    },
+    {
+        "id": 83,
+        "category": "escape-room",
+        "image": "/assets/thumbnails/escape-01.jpg",
+        "alt": "Fortnite Escape Room thumbnail"
+    },
+    {
+        "id": 84,
+        "category": "escape-room",
+        "image": "/assets/thumbnails/escape-02.jpg",
+        "alt": "Fortnite Escape Room thumbnail"
+    },
+    {
+        "id": 85,
+        "category": "escape-room",
+        "image": "/assets/thumbnails/escape-03.jpg",
+        "alt": "Fortnite Escape Room thumbnail"
+    },
+    {
+        "id": 86,
+        "category": "escape-room",
+        "image": "/assets/thumbnails/escape-04.jpg",
+        "alt": "Fortnite Escape Room thumbnail"
+    },
+    {
+        "id": 87,
+        "category": "escape-room",
+        "image": "/assets/thumbnails/escape-05.jpg",
+        "alt": "Fortnite Escape Room thumbnail"
+    },
+    {
+        "id": 88,
+        "category": "escape-room",
+        "image": "/assets/thumbnails/escape-06.jpg",
+        "alt": "Fortnite Escape Room thumbnail"
+    },
+    {
+        "id": 89,
+        "category": "escape-room",
+        "image": "/assets/thumbnails/escape-07.jpg",
+        "alt": "Fortnite Escape Room thumbnail"
+    },
+    {
+        "id": 90,
+        "category": "escape-room",
+        "image": "/assets/thumbnails/escape-08.jpg",
+        "alt": "Fortnite Escape Room thumbnail"
+    },
+    {
+        "id": 91,
+        "category": "escape-room",
+        "image": "/assets/thumbnails/escape-09.jpg",
+        "alt": "Fortnite Escape Room thumbnail"
+    },
+    {
+        "id": 92,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-01.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 93,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-02.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 94,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-03.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 95,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-04.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 96,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-05.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 97,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-06.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 98,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-07.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 99,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-08.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 100,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-08.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 101,
+        "category": "pillars",
+        "image": "/assets/thumbnails/pillars-09.jpg",
+        "alt": "Fortnite Pillars thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-01.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-02.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-03.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-04.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-05.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-06.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-07.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-08.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-08.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-09.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-10.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-11.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-12.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 102,
+        "category": "deathrun-parkour",
+        "image": "/assets/thumbnails/parkour-13.jpg",
+        "alt": "Fortnite Deathrun and Parkour thumbnail"
+    },
+    {
+        "id": 103,
+        "category": "other",
+        "image": "/assets/thumbnails/others-01.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 104,
+        "category": "other",
+        "image": "/assets/thumbnails/others-02.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 105,
+        "category": "other",
+        "image": "/assets/thumbnails/others-03.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 106,
+        "category": "other",
+        "image": "/assets/thumbnails/others-04.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 107,
+        "category": "other",
+        "image": "/assets/thumbnails/others-05.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 108,
+        "category": "other",
+        "image": "/assets/thumbnails/others-06.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 109,
+        "category": "other",
+        "image": "/assets/thumbnails/others-07.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 110,
+        "category": "other",
+        "image": "/assets/thumbnails/others-08.png",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 111,
+        "category": "other",
+        "image": "/assets/thumbnails/others-09.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 112,
+        "category": "other",
+        "image": "/assets/thumbnails/others-10.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 113,
+        "category": "other",
+        "image": "/assets/thumbnails/others-11.png",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 114,
+        "category": "other",
+        "image": "/assets/thumbnails/others-12.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 115,
+        "category": "other",
+        "image": "/assets/thumbnails/others-13.jpg",
+        "alt": "Fortnite UEFN thumbnail"
+    },
+    {
+        "id": 116,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-01.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 117,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-02.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 118,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-03.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 119,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-04.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 120,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-05.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 121,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-06.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 122,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-07.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 123,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-08.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 124,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-09.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 125,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-10.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 126,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-11.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    },
+    {
+        "id": 128,
+        "category": "gun-game",
+        "image": "/assets/thumbnails/gungame-13.jpg",
+        "alt": "Fortnite Gun Game thumbnail"
+    }
+]

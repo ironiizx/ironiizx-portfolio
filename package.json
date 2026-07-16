@@ -1,0 +1,31 @@
+{
+  "name": "ironiizx-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio web interactivo de iRoniiZx, diseñador de miniaturas y artista 3D para Fortnite y UEFN.",
+  "main": "src/server.js",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": [
+    "portfolio",
+    "ironiizx",
+    "uefn",
+    "fortnite",
+    "thumbnail-design",
+    "nodejs",
+    "express"
+  ],
+  "author": "Ronen Dario Saidman",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
