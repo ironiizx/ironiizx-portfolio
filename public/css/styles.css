@@ -2905,3 +2905,190 @@ body.gallery-panel-open, body.lightbox-open {
       rotate(360deg);
   }
 }
+
+/* ==================================================
+   FLECHA EXTERNA UNIVERSAL PARA BOTONES
+================================================== */
+
+.button__icon {
+  width: 16px;
+  height: 16px;
+
+  display: inline-block;
+
+  flex: 0 0 16px;
+
+  background-color: currentColor;
+
+  -webkit-mask-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M200 64v104a8 8 0 0 1-16 0V83.31L69.66 197.66a8 8 0 0 1-11.32-11.32L172.69 72H88a8 8 0 0 1 0-16h104a8 8 0 0 1 8 8Z'/%3E%3C/svg%3E");
+
+  mask-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M200 64v104a8 8 0 0 1-16 0V83.31L69.66 197.66a8 8 0 0 1-11.32-11.32L172.69 72H88a8 8 0 0 1 0-16h104a8 8 0 0 1 8 8Z'/%3E%3C/svg%3E");
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  transition:
+    transform 220ms ease,
+    background-color 220ms ease;
+}
+
+
+/* Botones outline: texto e ícono blancos */
+
+.button--outline {
+  color: #f4f4f4;
+}
+
+.button--outline .button__icon {
+  background-color: #f4f4f4;
+}
+
+
+/* Outline al pasar el mouse: texto e ícono negros */
+
+.button--outline:hover {
+  color: #070707;
+}
+
+.button--outline:hover .button__icon {
+  background-color: #070707;
+}
+
+
+/* Botones naranjas: texto e ícono negros */
+
+.button--primary {
+  color: #070707;
+}
+
+.button--primary .button__icon {
+  background-color: #070707;
+}
+
+
+/* Movimiento leve al pasar el mouse */
+
+.button:hover .button__icon {
+  transform:
+    translate(2px, -2px);
+}
+
+/* ==================================================
+   BOTONES SIN SALTO EN HOVER
+================================================== */
+
+.button {
+  transform: none;
+}
+
+.button:hover {
+  transform: none;
+}
+
+.button:active {
+  transform: none;
+}
+
+.button:hover .button__icon {
+  transform: none;
+}
+
+.contact-form__submit-arrow {
+  width: 16px;
+  height: 16px;
+
+  display: inline-block;
+
+  flex: 0 0 16px;
+
+  background-color: currentColor;
+}
+
+.commission-status__arrow {
+  width: 13px;
+  height: 13px;
+
+  flex: 0 0 13px;
+}
+
+/* ==================================================
+   OPEN COMMISSIONS SIN SALTO
+================================================== */
+
+.commission-status,
+.commission-status:hover,
+.commission-status:focus,
+.commission-status:active {
+  transform: none;
+}
+
+.commission-status:hover
+.commission-status__arrow,
+.commission-status:focus
+.commission-status__arrow,
+.commission-status:active
+.commission-status__arrow {
+  transform: none;
+}
+
+/* ==================================================
+   FOOTER CENTRADO CORRECTAMENTE
+================================================== */
+
+.footer__content {
+  display: grid;
+
+  grid-template-columns:
+    minmax(180px, 1fr)
+    auto
+    minmax(180px, 1fr);
+
+  align-items: center;
+
+  gap: 24px;
+}
+
+
+.footer__logo {
+  justify-self: start;
+}
+
+
+.footer__content p:first-of-type {
+  justify-self: center;
+
+  text-align: center;
+}
+
+
+.footer__content p:last-of-type {
+  justify-self: end;
+
+  text-align: right;
+}
+
+@media (max-width: 820px) {
+  .footer__content {
+    grid-template-columns: 1fr;
+
+    justify-items: center;
+
+    text-align: center;
+  }
+
+  .footer__logo,
+  .footer__content p:first-of-type,
+  .footer__content p:last-of-type {
+    justify-self: center;
+
+    text-align: center;
+  }
+}
