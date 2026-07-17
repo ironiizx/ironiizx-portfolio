@@ -1,41 +1,25 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
-  /* ==================================================
-     COMPROBAR QUE LENIS ESTÉ CARGADO
-  ================================================== */
-
   if (typeof Lenis === "undefined") {
-    console.error(
-      "Lenis no se cargó. Revisá que lenis.min.js aparezca antes de app.js en index.html."
-    );
-
+    console.error("No se pudo cargar Lenis.");
     return;
   }
 
-
-  /* ==================================================
-     ELEMENTOS PRINCIPALES
-  ================================================== */
+  // Elementos principales
 
   const header = document.querySelector(".header");
+  const sections = [...document.querySelectorAll("main section[id]")];
+  const internalLinks = [...document.querySelectorAll('a[href^="#"]')];
+  const navLinks = [
+    ...document.querySelectorAll('.navbar__link[href^="#"]')
+  ];
 
-  const sections = Array.from(
-    document.querySelectorAll("main section[id]")
-  );
+  const menuButton = document.querySelector("#navbar-toggle");
+  const mobileMenu = document.querySelector("#navbar-menu");
 
-  const internalLinks = Array.from(
-    document.querySelectorAll('a[href^="#"]')
-  );
-
-  const navigationLinks = Array.from(
-    document.querySelectorAll(
-      '.navbar__link[href^="#"]'
-    )
-  );
-
-  const revealElements = Array.from(
-    document.querySelectorAll(
+  const animatedElements = [
+    ...document.querySelectorAll(
       [
         ".hero__content",
         ".about__layout",
@@ -56,20 +40,15 @@ document.addEventListener("DOMContentLoaded", () => {
         ".contact__layout"
       ].join(",")
     )
-  );
+  ];
 
+  // Scroll y navegación
 
-  /* ==================================================
-     CONFIGURACIÓN DEL SCROLL
-  ================================================== */
-
-  const scrollEasing = (progress) => {
-    return Math.min(
+  const scrollEasing = (progress) =>
+    Math.min(
       1,
       1.001 - Math.pow(2, -10 * progress)
     );
-  };
-
 
   const lenis = new Lenis({
     autoRaf: true,
@@ -81,46 +60,29 @@ document.addEventListener("DOMContentLoaded", () => {
     stopInertiaOnNavigate: true
   });
 
-
-  /* ==================================================
-     ALTURA REAL DEL NAVBAR
-  ================================================== */
-
   function getHeaderHeight() {
-    return header?.offsetHeight ?? 90;
+    return header?.offsetHeight || 90;
   }
 
-
-  /* ==================================================
-     ACTUALIZAR LINK ACTIVO
-  ================================================== */
-
-  function updateActiveNavigation(sectionId) {
-    navigationLinks.forEach((link) => {
-      const destination =
-        link.getAttribute("href");
-
-      const isActive =
-        destination === `#${sectionId}`;
+  function setActiveLink(sectionId) {
+    navLinks.forEach((link) => {
+      const active =
+        link.getAttribute("href") ===
+        `#${sectionId}`;
 
       link.classList.toggle(
         "active",
-        isActive
+        active
       );
     });
   }
 
-
-  /* ==================================================
-     DETECTAR SECCIÓN ACTUAL
-  ================================================== */
-
   function updateCurrentSection() {
-    if (sections.length === 0) {
+    if (!sections.length) {
       return;
     }
 
-    const referencePosition =
+    const position =
       window.scrollY +
       getHeaderHeight() +
       window.innerHeight * 0.3;
@@ -128,40 +90,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSection = sections[0];
 
     sections.forEach((section) => {
-      if (
-        referencePosition >=
-        section.offsetTop
-      ) {
+      if (position >= section.offsetTop) {
         currentSection = section;
       }
     });
 
-    updateActiveNavigation(
-      currentSection.id
-    );
+    setActiveLink(currentSection.id);
   }
 
-
-  lenis.on("scroll", () => {
-    updateCurrentSection();
-  });
-
-
-  /* ==================================================
-     SCROLL HACIA UNA SECCIÓN
-  ================================================== */
-
-  function scrollToSection(
-    target,
-    destination,
-    updateUrl = true
-  ) {
-    if (!target) {
-      return;
-    }
-
+  function goToSection(target, hash) {
     const offset =
-      destination === "#home"
+      hash === "#home"
         ? 0
         : -getHeaderHeight();
 
@@ -169,54 +108,129 @@ document.addEventListener("DOMContentLoaded", () => {
       offset,
       duration: 0.85,
       easing: scrollEasing,
-      lock: false,
 
       onStart: () => {
-        updateActiveNavigation(
-          target.id
-        );
+        setActiveLink(target.id);
       },
 
       onComplete: () => {
-        updateActiveNavigation(
-          target.id
-        );
-
-        if (updateUrl) {
-          history.replaceState(
-            null,
-            "",
-            destination
-          );
-        }
+        setActiveLink(target.id);
+        history.replaceState(null, "", hash);
       }
     });
   }
 
+  lenis.on(
+    "scroll",
+    updateCurrentSection
+  );
 
-  /* ==================================================
-     NAVBAR Y BOTONES INTERNOS
-  ================================================== */
+  // Menú mobile
+
+  function menuIsOpen() {
+    return mobileMenu?.classList.contains(
+      "is-open"
+    );
+  }
+
+  function openMenu() {
+    if (!menuButton || !mobileMenu) {
+      return;
+    }
+
+    menuButton.classList.add("is-open");
+    mobileMenu.classList.add("is-open");
+
+    menuButton.setAttribute(
+      "aria-expanded",
+      "true"
+    );
+
+    menuButton.setAttribute(
+      "aria-label",
+      "Close navigation menu"
+    );
+
+    document.body.classList.add(
+      "mobile-menu-open"
+    );
+  }
+
+  function closeMenu() {
+    if (!menuButton || !mobileMenu) {
+      return;
+    }
+
+    menuButton.classList.remove("is-open");
+    mobileMenu.classList.remove("is-open");
+
+    menuButton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    menuButton.setAttribute(
+      "aria-label",
+      "Open navigation menu"
+    );
+
+    document.body.classList.remove(
+      "mobile-menu-open"
+    );
+  }
+
+  menuButton?.addEventListener(
+    "click",
+    () => {
+      if (menuIsOpen()) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    }
+  );
+
+  document.addEventListener(
+    "click",
+    (event) => {
+      if (
+        !menuIsOpen() ||
+        menuButton?.contains(event.target) ||
+        mobileMenu?.contains(event.target)
+      ) {
+        return;
+      }
+
+      closeMenu();
+    }
+  );
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        event.key === "Escape" &&
+        menuIsOpen()
+      ) {
+        closeMenu();
+        menuButton?.focus();
+      }
+    }
+  );
 
   internalLinks.forEach((link) => {
     link.addEventListener(
       "click",
       (event) => {
-        const destination =
+        const hash =
           link.getAttribute("href");
 
-        if (
-          !destination ||
-          destination === "#" ||
-          !destination.startsWith("#")
-        ) {
+        if (!hash || hash === "#") {
           return;
         }
 
         const target =
-          document.querySelector(
-            destination
-          );
+          document.querySelector(hash);
 
         if (!target) {
           return;
@@ -224,23 +238,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         event.preventDefault();
 
-        scrollToSection(
-          target,
-          destination
-        );
+        closeMenu();
+        goToSection(target, hash);
       }
     );
   });
 
+  // Animaciones de aparición
 
-  /* ==================================================
-     ANIMACIONES DE APARICIÓN
-  ================================================== */
-
-  revealElements.forEach((element) => {
+  animatedElements.forEach((element) => {
     element.classList.add("reveal");
   });
-
 
   const revealObserver =
     new IntersectionObserver(
@@ -265,50 +273,30 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
 
-
-  revealElements.forEach((element) => {
+  animatedElements.forEach((element) => {
     revealObserver.observe(element);
   });
 
+  requestAnimationFrame(() => {
+    document
+      .querySelector(".hero__content")
+      ?.classList.add("is-visible");
+  });
 
-  /* ==================================================
-     HERO INICIAL
-  ================================================== */
-
-  const heroContent =
-    document.querySelector(
-      ".hero__content"
-    );
-
-  if (heroContent) {
-    requestAnimationFrame(() => {
-      heroContent.classList.add(
-        "is-visible"
-      );
-    });
-  }
-
-
-  /* ==================================================
-     GALERÍA DINÁMICA
-  ================================================== */
+  // Galería
 
   const PREVIEW_LIMIT = 8;
-
-  const HERO_CAROUSEL_INTERVAL = 6500;
-  const HERO_CAROUSEL_TRANSITION = 1200;
-
+  const CAROUSEL_INTERVAL = 6500;
+  const CAROUSEL_TRANSITION = 1200;
 
   const gallery =
-    document.querySelector(
-      "#gallery"
-    );
+    document.querySelector("#gallery");
 
-  const categoryFilters = Array.from(
-    document.querySelectorAll(
+  const categoryFilters = [
+    ...document.querySelectorAll(
       ".category-filter"
     )
-  );
+  ];
 
   const viewMoreWrapper =
     document.querySelector(
@@ -346,9 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
   const lightbox =
-    document.querySelector(
-      "#lightbox"
-    );
+    document.querySelector("#lightbox");
 
   const lightboxImage =
     document.querySelector(
@@ -375,11 +361,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "#lightbox-counter"
     );
 
-
-  /* ==================================================
-     ELEMENTOS DEL CARRUSEL DEL HERO
-  ================================================== */
-
   const heroCarousel =
     document.querySelector(
       "#hero-carousel"
@@ -395,88 +376,75 @@ document.addEventListener("DOMContentLoaded", () => {
       "#hero-carousel-next"
     );
 
-
-  if (
-    gallery &&
-    viewMoreWrapper &&
-    viewMoreButton &&
-    galleryPanel &&
-    galleryPanelGrid &&
-    galleryPanelTitle &&
-    galleryPanelCount &&
-    galleryPanelClose &&
-    lightbox &&
-    lightboxImage &&
+  const galleryReady = [
+    gallery,
+    viewMoreWrapper,
+    viewMoreButton,
+    galleryPanel,
+    galleryPanelGrid,
+    galleryPanelTitle,
+    galleryPanelCount,
+    galleryPanelClose,
+    lightbox,
+    lightboxImage,
     lightboxCounter
-  ) {
+  ].every(Boolean);
+
+  if (galleryReady) {
     let allProjects = [];
     let filteredProjects = [];
     let lightboxProjects = [];
 
     let activeCategory =
-      categoryFilters.find(
-        (filter) => {
-          return filter.classList.contains(
-            "active"
-          );
-        }
-      )?.dataset.category ?? "all";
+      categoryFilters.find((filter) =>
+        filter.classList.contains("active")
+      )?.dataset.category || "all";
 
     let currentProjectIndex = 0;
-
-    let lastFocusedGalleryItem = null;
+    let lastFocusedItem = null;
     let lastFocusedBeforePanel = null;
 
-    let imageTransitionTimer;
-    let panelCloseTimer;
+    let imageTimer;
+    let panelTimer;
 
     let touchStartX = 0;
     let touchStartY = 0;
 
+    const categoryNames = {
+      all: "All Projects",
+      brainrot: "Brainrot",
+      pvp: "PVP/1v1",
+      tycoon: "Tycoon",
+      "escape-room": "Escape Room",
+      "deathrun-parkour":
+        "Deathrun/Parkour",
+      pillars: "Pillars",
+      vehicles: "Car/Vehicles",
+      "gun-game": "Gun Game",
+      other: "Others"
+    };
 
-    /* ==================================================
-       ESTADO DEL CARRUSEL DEL HERO
-    ================================================== */
-
-    let heroCarouselProjects = [];
-
-    let heroCarouselIndex = 0;
-
-    let heroCarouselActiveImage = 0;
-
-    let heroCarouselTimer = null;
-
-    let heroCarouselTransitionTimer = null;
-
-    let heroCarouselIsChanging = false;
-
-
-    /* ----------------------------------------------
-       MENSAJES DE ESTADO
-    ---------------------------------------------- */
+    const carousel = {
+      projects: [],
+      index: 0,
+      activeImage: 0,
+      interval: null,
+      transition: null,
+      changing: false
+    };
 
     function showGalleryMessage(
       container,
       message
     ) {
-      const paragraph =
+      const text =
         document.createElement("p");
 
-      paragraph.className =
-        "gallery__empty";
+      text.className = "gallery__empty";
+      text.textContent = message;
 
-      paragraph.textContent =
-        message;
-
-      container.replaceChildren(
-        paragraph
-      );
+      container.replaceChildren(text);
     }
-
-
-    /* ----------------------------------------------
-       VALIDAR PROYECTOS
-    ---------------------------------------------- */
 
     function normalizeProjects(projects) {
       return projects
@@ -485,48 +453,41 @@ document.addEventListener("DOMContentLoaded", () => {
             project &&
             typeof project.image ===
               "string" &&
-            project.image.trim() !== "" &&
             typeof project.category ===
               "string" &&
-            project.category.trim() !== ""
+            project.image.trim() &&
+            project.category.trim()
           );
         })
-        .map((project, index) => {
-          return {
-            id:
-              project.id ??
-              `project-${index + 1}`,
+        .map((project, index) => ({
+          id:
+            project.id ??
+            index + 1,
 
-            image:
-              project.image.trim(),
+          image:
+            project.image.trim(),
 
-            category:
-              project.category
-                .trim()
-                .toLowerCase(),
+          category:
+            project.category
+              .trim()
+              .toLowerCase(),
 
-            alt:
-              typeof project.alt ===
-                "string" &&
-              project.alt.trim() !== ""
-                ? project.alt.trim()
-                : "Fortnite and UEFN thumbnail"
-          };
-        });
+          alt:
+            typeof project.alt ===
+              "string" &&
+            project.alt.trim()
+              ? project.alt.trim()
+              : "Fortnite and UEFN thumbnail"
+        }));
     }
 
-
-    /* ==================================================
-       HERO — CARRUSEL ALEATORIO
-    ================================================== */
+    // Carrusel del Hero
 
     function shuffleProjects(projects) {
-      const shuffled =
-        [...projects];
+      const result = [...projects];
 
       for (
-        let index =
-          shuffled.length - 1;
+        let index = result.length - 1;
         index > 0;
         index -= 1
       ) {
@@ -536,136 +497,97 @@ document.addEventListener("DOMContentLoaded", () => {
             (index + 1)
           );
 
-        const temporaryProject =
-          shuffled[index];
-
-        shuffled[index] =
-          shuffled[randomIndex];
-
-        shuffled[randomIndex] =
-          temporaryProject;
+        [
+          result[index],
+          result[randomIndex]
+        ] = [
+          result[randomIndex],
+          result[index]
+        ];
       }
 
-      return shuffled;
+      return result;
     }
 
-
-    function getHeroCarouselImages() {
-      return [
-        heroCarouselCurrent,
-        heroCarouselNext
-      ];
-    }
-
-
-    function preloadHeroImage(source) {
+    function preloadImage(src) {
       return new Promise(
         (resolve, reject) => {
-          const image =
-            new Image();
+          const image = new Image();
 
-          image.onload =
-            () => {
-              resolve(source);
-            };
-
-          image.onerror =
-            () => {
-              reject(
-                new Error(
-                  `No se pudo cargar ${source}`
-                )
-              );
-            };
-
-          image.src =
-            source;
+          image.onload = resolve;
+          image.onerror = reject;
+          image.src = src;
         }
       );
     }
 
+    function resetCarousel() {
+      carousel.projects =
+        shuffleProjects(allProjects);
 
-    function resetHeroCarouselOrder() {
-      heroCarouselProjects =
-        shuffleProjects(
-          allProjects
-        );
-
-      heroCarouselIndex = 0;
+      carousel.index = 0;
     }
 
-
-    function getNextHeroProject() {
-      if (
-        heroCarouselProjects.length === 0
-      ) {
+    function getNextCarouselProject() {
+      if (!carousel.projects.length) {
         return null;
       }
 
       if (
-        heroCarouselIndex >=
-        heroCarouselProjects.length
+        carousel.index >=
+        carousel.projects.length
       ) {
-        resetHeroCarouselOrder();
+        resetCarousel();
       }
 
       const project =
-        heroCarouselProjects[
-          heroCarouselIndex
+        carousel.projects[
+          carousel.index
         ];
 
-      heroCarouselIndex += 1;
+      carousel.index += 1;
 
       return project;
     }
 
-
     async function showNextHeroImage() {
       if (
-        heroCarouselIsChanging ||
+        carousel.changing ||
         !heroCarousel ||
         !heroCarouselCurrent ||
-        !heroCarouselNext ||
-        heroCarouselProjects.length === 0
+        !heroCarouselNext
       ) {
         return;
       }
 
       const project =
-        getNextHeroProject();
+        getNextCarouselProject();
 
       if (!project) {
         return;
       }
 
-      heroCarouselIsChanging = true;
+      carousel.changing = true;
 
-      const images =
-        getHeroCarouselImages();
+      const images = [
+        heroCarouselCurrent,
+        heroCarouselNext
+      ];
 
-      const activeImage =
+      const currentImage =
+        images[carousel.activeImage];
+
+      const nextImage =
         images[
-          heroCarouselActiveImage
-        ];
-
-      const incomingImage =
-        images[
-          heroCarouselActiveImage === 0
+          carousel.activeImage === 0
             ? 1
             : 0
         ];
 
       try {
-        await preloadHeroImage(
-          project.image
-        );
-      } catch (error) {
-        console.warn(
-          "No se pudo precargar una imagen del Hero:",
-          project.image
-        );
-
-        heroCarouselIsChanging = false;
+        await preloadImage(project.image);
+      } catch {
+        carousel.changing = false;
 
         window.setTimeout(
           showNextHeroImage,
@@ -675,67 +597,56 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      incomingImage.src =
-        project.image;
+      nextImage.src = project.image;
 
-      incomingImage.classList.remove(
+      nextImage.classList.remove(
         "is-fading-out"
       );
 
-      /*
-        El requestAnimationFrame permite que
-        el navegador registre primero el nuevo src
-        y después aplique la transición.
-      */
-
       requestAnimationFrame(() => {
-        incomingImage.classList.add(
+        nextImage.classList.add(
           "is-visible"
         );
 
-        activeImage.classList.add(
+        currentImage.classList.add(
           "is-fading-out"
         );
       });
 
       window.clearTimeout(
-        heroCarouselTransitionTimer
+        carousel.transition
       );
 
-      heroCarouselTransitionTimer =
+      carousel.transition =
         window.setTimeout(() => {
-          activeImage.classList.remove(
+          currentImage.classList.remove(
             "is-visible",
             "is-fading-out"
           );
 
-          heroCarouselActiveImage =
-            heroCarouselActiveImage === 0
+          carousel.activeImage =
+            carousel.activeImage === 0
               ? 1
               : 0;
 
-          heroCarouselIsChanging =
-            false;
-        }, HERO_CAROUSEL_TRANSITION);
+          carousel.changing = false;
+        }, CAROUSEL_TRANSITION);
     }
-
 
     function stopHeroCarousel() {
       window.clearInterval(
-        heroCarouselTimer
+        carousel.interval
       );
 
-      heroCarouselTimer =
-        null;
+      carousel.interval = null;
     }
-
 
     function startHeroCarousel() {
       if (
         !heroCarousel ||
         !heroCarouselCurrent ||
         !heroCarouselNext ||
-        allProjects.length === 0
+        !allProjects.length
       ) {
         return;
       }
@@ -743,45 +654,34 @@ document.addEventListener("DOMContentLoaded", () => {
       stopHeroCarousel();
 
       window.clearTimeout(
-        heroCarouselTransitionTimer
+        carousel.transition
       );
 
-      resetHeroCarouselOrder();
+      resetCarousel();
 
-      heroCarouselActiveImage = 0;
-      heroCarouselIsChanging = false;
+      carousel.activeImage = 0;
+      carousel.changing = false;
 
-      heroCarouselCurrent.src = "";
-      heroCarouselNext.src = "";
+      [
+        heroCarouselCurrent,
+        heroCarouselNext
+      ].forEach((image) => {
+        image.src = "";
 
-      heroCarouselCurrent.classList.remove(
-        "is-visible",
-        "is-fading-out"
-      );
-
-      heroCarouselNext.classList.remove(
-        "is-visible",
-        "is-fading-out"
-      );
-
-      /*
-        Muestra la primera miniatura inmediatamente.
-      */
+        image.classList.remove(
+          "is-visible",
+          "is-fading-out"
+        );
+      });
 
       showNextHeroImage();
 
-      heroCarouselTimer =
+      carousel.interval =
         window.setInterval(
           showNextHeroImage,
-          HERO_CAROUSEL_INTERVAL
+          CAROUSEL_INTERVAL
         );
     }
-
-
-    /*
-      Evita que el carrusel siga consumiendo recursos
-      cuando la pestaña no está visible.
-    */
 
     document.addEventListener(
       "visibilitychange",
@@ -791,90 +691,68 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        if (
-          allProjects.length > 0
-        ) {
+        if (allProjects.length) {
           stopHeroCarousel();
 
-          heroCarouselTimer =
+          carousel.interval =
             window.setInterval(
               showNextHeroImage,
-              HERO_CAROUSEL_INTERVAL
+              CAROUSEL_INTERVAL
             );
         }
       }
     );
 
-
-    /* ----------------------------------------------
-       CREAR UNA MINIATURA
-    ---------------------------------------------- */
+    // Render de proyectos
 
     function createGalleryItem(
       project,
-      projectIndex,
+      index,
       total
     ) {
-      const galleryItem =
-        document.createElement(
-          "button"
-        );
-
-      galleryItem.className =
-        "gallery__item";
-
-      galleryItem.type =
-        "button";
-
-      galleryItem.dataset.projectIndex =
-        String(projectIndex);
-
-      galleryItem.dataset.category =
-        project.category;
-
-      galleryItem.setAttribute(
-        "aria-label",
-        `Open thumbnail ${projectIndex + 1} of ${total}`
-      );
-
-      galleryItem.style.setProperty(
-        "--gallery-delay",
-        `${Math.min(projectIndex, 8) * 45}ms`
-      );
-
+      const button =
+        document.createElement("button");
 
       const image =
-        document.createElement(
-          "img"
-        );
+        document.createElement("img");
 
-      image.src =
-        project.image;
+      button.className =
+        "gallery__item";
 
-      image.alt =
-        project.alt;
+      button.type = "button";
 
-      image.loading =
-        "lazy";
+      button.dataset.projectIndex =
+        String(index);
 
-      image.decoding =
-        "async";
+      button.dataset.category =
+        project.category;
 
-      image.draggable =
-        false;
+      button.setAttribute(
+        "aria-label",
+        `Open thumbnail ${index + 1} of ${total}`
+      );
 
+      button.style.setProperty(
+        "--gallery-delay",
+        `${Math.min(index, 8) * 45}ms`
+      );
+
+      image.src = project.image;
+      image.alt = project.alt;
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.draggable = false;
 
       image.addEventListener(
         "error",
         () => {
-          galleryItem.classList.add(
+          button.disabled = true;
+
+          button.classList.add(
             "gallery__item--error"
           );
 
-          galleryItem.disabled =
-            true;
-
-          galleryItem.setAttribute(
+          button.setAttribute(
             "aria-label",
             "Thumbnail unavailable"
           );
@@ -884,24 +762,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
 
+      button.append(image);
 
-      galleryItem.append(image);
-
-      return galleryItem;
+      return button;
     }
 
-
-    /* ----------------------------------------------
-       RENDERIZAR LISTA DE PROYECTOS
-    ---------------------------------------------- */
-
-    function renderProjectList(
+    function renderProjects(
       container,
       projects
     ) {
       container.replaceChildren();
 
-      if (projects.length === 0) {
+      if (!projects.length) {
         const message =
           activeCategory === "all"
             ? "No projects have been added yet."
@@ -933,50 +805,34 @@ document.addEventListener("DOMContentLoaded", () => {
       container.append(fragment);
     }
 
-
-    /* ----------------------------------------------
-       ACTUALIZAR FILTRO ACTIVO
-    ---------------------------------------------- */
-
-    function updateActiveFilter(
-      category
-    ) {
+    function updateActiveFilter(category) {
       categoryFilters.forEach(
         (filter) => {
-          const isActive =
+          const active =
             filter.dataset.category ===
             category;
 
           filter.classList.toggle(
             "active",
-            isActive
+            active
           );
 
           filter.setAttribute(
             "aria-pressed",
-            String(isActive)
+            String(active)
           );
         }
       );
     }
 
-
-    /* ----------------------------------------------
-       BOTÓN VIEW MORE
-    ---------------------------------------------- */
-
     function updateViewMoreButton() {
-      const hasMoreProjects =
+      const hasMore =
         filteredProjects.length >
         PREVIEW_LIMIT;
 
-      viewMoreWrapper.hidden =
-        !hasMoreProjects;
+      viewMoreWrapper.hidden = !hasMore;
 
-      viewMoreButton.hidden =
-        !hasMoreProjects;
-
-      if (hasMoreProjects) {
+      if (hasMore) {
         viewMoreButton.setAttribute(
           "aria-label",
           `View all ${filteredProjects.length} thumbnails in the selected category`
@@ -988,130 +844,69 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-
-    /* ----------------------------------------------
-       RENDERIZAR VISTA PREVIA
-    ---------------------------------------------- */
-
     function renderPreview() {
-      const previewProjects =
+      const preview =
         filteredProjects.slice(
           0,
           PREVIEW_LIMIT
         );
 
-      renderProjectList(
+      renderProjects(
         gallery,
-        previewProjects
+        preview
       );
 
       updateViewMoreButton();
     }
 
-
-    /* ----------------------------------------------
-       NOMBRE DE LA CATEGORÍA
-    ---------------------------------------------- */
-
-    function getCategoryLabel(category) {
-      const labels = {
-        all: "All Projects",
-        brainrot: "Brainrot",
-        pvp: "PVP/1v1",
-        tycoon: "Tycoon",
-        "escape-room": "Escape Room",
-        "deathrun-parkour":
-          "Deathrun/Parkour",
-        pillars: "Pillars",
-        vehicles: "Car/Vehicles",
-        "gun-game": "Gun Game",
-        other: "Others"
-      };
-
-      return (
-        labels[category] ??
-        category
-      );
-    }
-
-
-    /* ----------------------------------------------
-       RENDERIZAR GALERÍA COMPLETA
-    ---------------------------------------------- */
-
     function renderCompleteGallery() {
-      renderProjectList(
+      renderProjects(
         galleryPanelGrid,
         filteredProjects
       );
 
       galleryPanelTitle.textContent =
-        getCategoryLabel(
-          activeCategory
-        );
+        categoryNames[activeCategory] ||
+        activeCategory;
 
-      const noun =
+      const word =
         filteredProjects.length === 1
           ? "thumbnail"
           : "thumbnails";
 
       galleryPanelCount.textContent =
-        `${filteredProjects.length} ${noun}`;
+        `${filteredProjects.length} ${word}`;
     }
 
-
-    /* ----------------------------------------------
-       APLICAR UNA CATEGORÍA
-    ---------------------------------------------- */
-
     function applyCategory(category) {
-      activeCategory =
-        category;
+      activeCategory = category;
 
       filteredProjects =
         category === "all"
           ? [...allProjects]
           : allProjects.filter(
-              (project) => {
-                return (
-                  project.category ===
-                  category
-                );
-              }
+              (project) =>
+                project.category ===
+                category
             );
 
-      updateActiveFilter(
-        category
-      );
-
+      updateActiveFilter(category);
       renderPreview();
     }
 
+    categoryFilters.forEach((filter) => {
+      filter.addEventListener(
+        "click",
+        () => {
+          const category =
+            filter.dataset.category;
 
-    categoryFilters.forEach(
-      (filter) => {
-        filter.addEventListener(
-          "click",
-          () => {
-            const category =
-              filter.dataset.category;
-
-            if (!category) {
-              return;
-            }
-
-            applyCategory(
-              category
-            );
+          if (category) {
+            applyCategory(category);
           }
-        );
-      }
-    );
-
-
-    /* ----------------------------------------------
-       CARGAR PROJECTS.JSON
-    ---------------------------------------------- */
+        }
+      );
+    });
 
     async function loadProjects() {
       showGalleryMessage(
@@ -1134,33 +929,23 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         }
 
-        const projects =
+        const data =
           await response.json();
 
-        if (!Array.isArray(projects)) {
-          throw new TypeError(
-            "The projects response is not an array."
+        if (!Array.isArray(data)) {
+          throw new Error(
+            "Invalid projects format"
           );
         }
 
         allProjects =
-          normalizeProjects(
-            projects
-          );
+          normalizeProjects(data);
 
-        applyCategory(
-          activeCategory
-        );
-
-        /*
-          El carrusel utiliza todos los proyectos,
-          independientemente del filtro seleccionado.
-        */
-
+        applyCategory(activeCategory);
         startHeroCarousel();
       } catch (error) {
         console.error(
-          "No se pudo cargar la galería:",
+          "Error al cargar los proyectos:",
           error
         );
 
@@ -1169,17 +954,13 @@ document.addEventListener("DOMContentLoaded", () => {
           "Projects could not be loaded."
         );
 
-        viewMoreWrapper.hidden =
-          true;
+        viewMoreWrapper.hidden = true;
       }
     }
 
+    // Panel View More
 
-    /* ==================================================
-       GALERÍA COMPLETA
-    ================================================== */
-
-    function galleryPanelIsOpen() {
+    function panelIsOpen() {
       return (
         !galleryPanel.hidden &&
         galleryPanel.classList.contains(
@@ -1187,7 +968,6 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       );
     }
-
 
     function openGalleryPanel() {
       if (
@@ -1197,20 +977,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      window.clearTimeout(
-        panelCloseTimer
-      );
+      window.clearTimeout(panelTimer);
 
       lastFocusedBeforePanel =
         document.activeElement;
 
       renderCompleteGallery();
 
-      galleryPanel.hidden =
-        false;
-
-      galleryPanel.scrollTop =
-        0;
+      galleryPanel.hidden = false;
+      galleryPanel.scrollTop = 0;
 
       document.body.classList.add(
         "gallery-panel-open"
@@ -1225,19 +1000,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-
-    function finishClosingGalleryPanel() {
-      galleryPanel.hidden =
-        true;
-
-      galleryPanel.scrollTop =
-        0;
+    function finishClosingPanel() {
+      galleryPanel.hidden = true;
+      galleryPanel.scrollTop = 0;
 
       document.body.classList.remove(
         "gallery-panel-open"
       );
-
-      lenis.start();
 
       if (
         lastFocusedBeforePanel instanceof
@@ -1250,9 +1019,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-
     function closeGalleryPanel() {
-      if (!galleryPanelIsOpen()) {
+      if (!panelIsOpen()) {
         return;
       }
 
@@ -1260,25 +1028,22 @@ document.addEventListener("DOMContentLoaded", () => {
         "is-open"
       );
 
-      panelCloseTimer =
+      panelTimer =
         window.setTimeout(
-          finishClosingGalleryPanel,
+          finishClosingPanel,
           220
         );
     }
-
 
     viewMoreButton.addEventListener(
       "click",
       openGalleryPanel
     );
 
-
     galleryPanelClose.addEventListener(
       "click",
       closeGalleryPanel
     );
-
 
     galleryPanel.addEventListener(
       "click",
@@ -1292,20 +1057,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
 
-
-    /* ==================================================
-       LIGHTBOX
-    ================================================== */
+    // Lightbox
 
     function lightboxIsOpen() {
       return Boolean(
         lightbox.open ||
-        lightbox.hasAttribute(
-          "open"
-        )
+        lightbox.hasAttribute("open")
       );
     }
-
 
     function preloadAdjacentImages() {
       if (
@@ -1333,16 +1092,14 @@ document.addEventListener("DOMContentLoaded", () => {
         previousIndex,
         nextIndex
       ].forEach((index) => {
-        const preloadImage =
-          new Image();
+        const image = new Image();
 
-        preloadImage.src =
+        image.src =
           lightboxProjects[
             index
           ].image;
       });
     }
-
 
     function updateLightbox(
       animate = false
@@ -1356,10 +1113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      window.clearTimeout(
-        imageTransitionTimer
-      );
-
+      window.clearTimeout(imageTimer);
 
       const updateImage = () => {
         lightboxImage.src =
@@ -1371,17 +1125,17 @@ document.addEventListener("DOMContentLoaded", () => {
         lightboxCounter.textContent =
           `${currentProjectIndex + 1} / ${lightboxProjects.length}`;
 
-        const hasMultipleProjects =
+        const hasMultiple =
           lightboxProjects.length > 1;
 
         if (lightboxPrevious) {
           lightboxPrevious.hidden =
-            !hasMultipleProjects;
+            !hasMultiple;
         }
 
         if (lightboxNext) {
           lightboxNext.hidden =
-            !hasMultipleProjects;
+            !hasMultiple;
         }
 
         requestAnimationFrame(() => {
@@ -1393,45 +1147,31 @@ document.addEventListener("DOMContentLoaded", () => {
         preloadAdjacentImages();
       };
 
-
       if (animate) {
         lightboxImage.classList.add(
           "is-changing"
         );
 
-        imageTransitionTimer =
+        imageTimer =
           window.setTimeout(
             updateImage,
             110
           );
-
-        return;
+      } else {
+        updateImage();
       }
-
-      updateImage();
     }
 
-
-    function openLightbox(
-      projectIndex,
-      trigger
-    ) {
-      if (
-        !filteredProjects[
-          projectIndex
-        ]
-      ) {
+    function openLightbox(index, trigger) {
+      if (!filteredProjects[index]) {
         return;
       }
 
       lightboxProjects =
         filteredProjects;
 
-      currentProjectIndex =
-        projectIndex;
-
-      lastFocusedGalleryItem =
-        trigger;
+      currentProjectIndex = index;
+      lastFocusedItem = trigger;
 
       updateLightbox();
 
@@ -1454,11 +1194,8 @@ document.addEventListener("DOMContentLoaded", () => {
       lenis.stop();
     }
 
-
     function restorePageAfterLightbox() {
-      window.clearTimeout(
-        imageTransitionTimer
-      );
+      window.clearTimeout(imageTimer);
 
       document.body.classList.remove(
         "lightbox-open"
@@ -1467,16 +1204,15 @@ document.addEventListener("DOMContentLoaded", () => {
       lenis.start();
 
       if (
-        lastFocusedGalleryItem instanceof
+        lastFocusedItem instanceof
           HTMLElement &&
         document.contains(
-          lastFocusedGalleryItem
+          lastFocusedItem
         )
       ) {
-        lastFocusedGalleryItem.focus();
+        lastFocusedItem.focus();
       }
     }
-
 
     function closeLightbox() {
       if (!lightboxIsOpen()) {
@@ -1496,7 +1232,6 @@ document.addEventListener("DOMContentLoaded", () => {
         restorePageAfterLightbox();
       }
     }
-
 
     function changeLightboxProject(
       direction
@@ -1518,98 +1253,40 @@ document.addEventListener("DOMContentLoaded", () => {
       updateLightbox(true);
     }
 
+    function handleGalleryClick(event) {
+      const item =
+        event.target.closest(
+          ".gallery__item"
+        );
 
-    /* ----------------------------------------------
-       ABRIR DESDE LA VISTA PREVIA
-    ---------------------------------------------- */
+      if (!item || item.disabled) {
+        return;
+      }
+
+      const index =
+        Number(
+          item.dataset.projectIndex
+        );
+
+      if (Number.isInteger(index)) {
+        openLightbox(index, item);
+      }
+    }
 
     gallery.addEventListener(
       "click",
-      (event) => {
-        const galleryItem =
-          event.target.closest(
-            ".gallery__item"
-          );
-
-        if (
-          !galleryItem ||
-          galleryItem.disabled
-        ) {
-          return;
-        }
-
-        const projectIndex =
-          Number(
-            galleryItem.dataset
-              .projectIndex
-          );
-
-        if (
-          !Number.isInteger(
-            projectIndex
-          )
-        ) {
-          return;
-        }
-
-        openLightbox(
-          projectIndex,
-          galleryItem
-        );
-      }
+      handleGalleryClick
     );
-
-
-    /* ----------------------------------------------
-       ABRIR DESDE LA GALERÍA COMPLETA
-    ---------------------------------------------- */
 
     galleryPanelGrid.addEventListener(
       "click",
-      (event) => {
-        const galleryItem =
-          event.target.closest(
-            ".gallery__item"
-          );
-
-        if (
-          !galleryItem ||
-          galleryItem.disabled
-        ) {
-          return;
-        }
-
-        const projectIndex =
-          Number(
-            galleryItem.dataset
-              .projectIndex
-          );
-
-        if (
-          !Number.isInteger(
-            projectIndex
-          )
-        ) {
-          return;
-        }
-
-        openLightbox(
-          projectIndex,
-          galleryItem
-        );
-      }
+      handleGalleryClick
     );
-
-
-    /* ----------------------------------------------
-       CONTROLES DEL LIGHTBOX
-    ---------------------------------------------- */
 
     lightboxClose?.addEventListener(
       "click",
       closeLightbox
     );
-
 
     lightboxPrevious?.addEventListener(
       "click",
@@ -1618,14 +1295,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
 
-
     lightboxNext?.addEventListener(
       "click",
       () => {
         changeLightboxProject(1);
       }
     );
-
 
     lightbox.addEventListener(
       "click",
@@ -1639,46 +1314,30 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
 
-
     lightbox.addEventListener(
       "cancel",
       (event) => {
         event.preventDefault();
-
         closeLightbox();
       }
     );
-
 
     lightbox.addEventListener(
       "close",
       restorePageAfterLightbox
     );
 
-
-    /* ----------------------------------------------
-       TECLADO
-    ---------------------------------------------- */
-
     document.addEventListener(
       "keydown",
       (event) => {
         if (lightboxIsOpen()) {
-          if (
-            event.key ===
-            "ArrowLeft"
-          ) {
+          if (event.key === "ArrowLeft") {
             event.preventDefault();
-
             changeLightboxProject(-1);
           }
 
-          if (
-            event.key ===
-            "ArrowRight"
-          ) {
+          if (event.key === "ArrowRight") {
             event.preventDefault();
-
             changeLightboxProject(1);
           }
 
@@ -1686,20 +1345,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (
-          galleryPanelIsOpen() &&
+          panelIsOpen() &&
           event.key === "Escape"
         ) {
           event.preventDefault();
-
           closeGalleryPanel();
         }
       }
     );
-
-
-    /* ----------------------------------------------
-       SWIPE EN DISPOSITIVOS TÁCTILES
-    ---------------------------------------------- */
 
     lightbox.addEventListener(
       "touchstart",
@@ -1718,40 +1371,33 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
 
-
     lightbox.addEventListener(
       "touchend",
       (event) => {
         const touch =
           event.changedTouches[0];
 
-        const horizontalDistance =
+        const distanceX =
           touch.clientX -
           touchStartX;
 
-        const verticalDistance =
+        const distanceY =
           touch.clientY -
           touchStartY;
 
-        const isHorizontalGesture =
-          Math.abs(
-            horizontalDistance
-          ) >
-          Math.abs(
-            verticalDistance
-          );
+        const horizontal =
+          Math.abs(distanceX) >
+          Math.abs(distanceY);
 
         if (
-          !isHorizontalGesture ||
-          Math.abs(
-            horizontalDistance
-          ) < 50
+          !horizontal ||
+          Math.abs(distanceX) < 50
         ) {
           return;
         }
 
         changeLightboxProject(
-          horizontalDistance > 0
+          distanceX > 0
             ? -1
             : 1
         );
@@ -1761,7 +1407,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
 
-
     updateActiveFilter(
       activeCategory
     );
@@ -1769,557 +1414,417 @@ document.addEventListener("DOMContentLoaded", () => {
     loadProjects();
   } else if (gallery) {
     console.error(
-      "Faltan elementos de la galería completa o del lightbox en index.html."
+      "Faltan elementos de la galería o del lightbox."
     );
   }
 
+  // Formulario EmailJS
 
-/* ==================================================
-   FORMULARIO DE CONTACTO — EMAILJS
-================================================== */
+  const EMAILJS_SERVICE_ID =
+    "service_6nuexde";
 
-const EMAILJS_SERVICE_ID =
-  "service_6nuexde";
+  const EMAILJS_TEMPLATE_ID =
+    "template_jwemmb8";
 
-const EMAILJS_TEMPLATE_ID =
-  "template_jwemmb8";
+  const EMAILJS_PUBLIC_KEY =
+    "7JwnhAwdWWs_Vb60l";
 
-const EMAILJS_PUBLIC_KEY =
-  "7JwnhAwdWWs_Vb60l";
+  const CONTACT_COOLDOWN = 10000;
 
-const CONTACT_COOLDOWN_MS =
-  10000;
-
-
-const contactForm =
-  document.querySelector(
-    "#contact-form"
-  );
-
-const contactSubmit =
-  document.querySelector(
-    "#contact-submit"
-  );
-
-const contactFormStatus =
-  document.querySelector(
-    "#contact-form-status"
-  );
-
-const messageInput =
-  document.querySelector(
-    "#message"
-  );
-
-const messageCounter =
-  document.querySelector(
-    "#message-counter"
-  );
-
-const contactTime =
-  document.querySelector(
-    "#contact-time"
-  );
-
-let lastContactSubmission = 0;
-
-
-/* ----------------------------------------------
-   ESTADO GENERAL DEL FORMULARIO
----------------------------------------------- */
-
-function setFormStatus(
-  message,
-  type = ""
-) {
-  if (!contactFormStatus) {
-    return;
-  }
-
-  contactFormStatus.textContent =
-    message;
-
-  contactFormStatus.classList.remove(
-    "is-success",
-    "is-error"
-  );
-
-  if (type === "success") {
-    contactFormStatus.classList.add(
-      "is-success"
+  const contactForm =
+    document.querySelector(
+      "#contact-form"
     );
-  }
 
-  if (type === "error") {
-    contactFormStatus.classList.add(
+  const contactSubmit =
+    document.querySelector(
+      "#contact-submit"
+    );
+
+  const contactStatus =
+    document.querySelector(
+      "#contact-form-status"
+    );
+
+  const messageInput =
+    document.querySelector(
+      "#message"
+    );
+
+  const messageCounter =
+    document.querySelector(
+      "#message-counter"
+    );
+
+  const contactTime =
+    document.querySelector(
+      "#contact-time"
+    );
+
+  let lastSubmission = 0;
+
+  function setFormStatus(
+    message,
+    type = ""
+  ) {
+    if (!contactStatus) {
+      return;
+    }
+
+    contactStatus.textContent = message;
+
+    contactStatus.classList.remove(
+      "is-success",
       "is-error"
     );
-  }
-}
 
-
-/* ----------------------------------------------
-   ESTADO DEL BOTÓN
----------------------------------------------- */
-
-function setContactLoading(
-  isLoading
-) {
-  if (!contactSubmit) {
-    return;
+    if (type) {
+      contactStatus.classList.add(
+        `is-${type}`
+      );
+    }
   }
 
-  contactSubmit.disabled =
-    isLoading;
-
-  contactSubmit.classList.toggle(
-    "is-loading",
-    isLoading
-  );
-
-  contactSubmit.setAttribute(
-    "aria-busy",
-    String(isLoading)
-  );
-}
-
-
-/* ----------------------------------------------
-   CONTADOR DEL MENSAJE
----------------------------------------------- */
-
-function updateMessageCounter() {
-  if (
-    !messageInput ||
-    !messageCounter
-  ) {
-    return;
-  }
-
-  messageCounter.textContent =
-    `${messageInput.value.length} / 2000`;
-}
-
-
-/* ----------------------------------------------
-   ERRORES DE CAMPOS
----------------------------------------------- */
-
-function clearFieldError(field) {
-  if (!field) {
-    return;
-  }
-
-  field.classList.remove(
-    "is-invalid"
-  );
-
-  field.removeAttribute(
-    "aria-invalid"
-  );
-
-  const errorElement =
-    document.querySelector(
-      `[data-error-for="${field.id}"]`
-    );
-
-  if (errorElement) {
-    errorElement.textContent =
-      "";
-  }
-}
-
-
-function clearAllFieldErrors() {
-  if (!contactForm) {
-    return;
-  }
-
-  const fields =
-    contactForm.querySelectorAll(
-      "input, textarea"
-    );
-
-  fields.forEach((field) => {
-    clearFieldError(field);
-  });
-}
-
-
-function showFieldError(
-  field,
-  message
-) {
-  if (!field) {
-    return;
-  }
-
-  field.classList.add(
-    "is-invalid"
-  );
-
-  field.setAttribute(
-    "aria-invalid",
-    "true"
-  );
-
-  const errorElement =
-    document.querySelector(
-      `[data-error-for="${field.id}"]`
-    );
-
-  if (errorElement) {
-    errorElement.textContent =
-      message;
-  }
-}
-
-
-/* ----------------------------------------------
-   VALIDACIÓN
----------------------------------------------- */
-
-function validateContactForm() {
-  if (!contactForm) {
-    return false;
-  }
-
-  clearAllFieldErrors();
-
-  const nameField =
-    contactForm.elements.from_name;
-
-  const emailField =
-    contactForm.elements.reply_to;
-
-  const messageField =
-    contactForm.elements.message;
-
-  let isValid = true;
-
-
-  const normalizedName =
-    nameField.value.trim();
-
-  const normalizedEmail =
-    emailField.value.trim();
-
-  const normalizedMessage =
-    messageField.value.trim();
-
-
-  if (normalizedName.length < 2) {
-    showFieldError(
-      nameField,
-      "Please enter your name."
-    );
-
-    isValid = false;
-  }
-
-
-  if (!normalizedEmail) {
-    showFieldError(
-      emailField,
-      "Please enter your email."
-    );
-
-    isValid = false;
-  } else if (
-    !emailField.validity.valid
-  ) {
-    showFieldError(
-      emailField,
-      "Please enter a valid email address."
-    );
-
-    isValid = false;
-  }
-
-
-  if (normalizedMessage.length < 10) {
-    showFieldError(
-      messageField,
-      "Please enter at least 10 characters."
-    );
-
-    isValid = false;
-  }
-
-
-  return isValid;
-}
-
-
-/* ----------------------------------------------
-   INICIAR EMAILJS
----------------------------------------------- */
-
-if (typeof emailjs !== "undefined") {
-  emailjs.init({
-    publicKey:
-      EMAILJS_PUBLIC_KEY
-  });
-} else {
-  console.error(
-    "EmailJS no se cargó. Revisá el script en index.html."
-  );
-}
-
-
-/* ----------------------------------------------
-   EVENTOS DE LOS CAMPOS
----------------------------------------------- */
-
-messageInput?.addEventListener(
-  "input",
-  updateMessageCounter
-);
-
-
-contactForm?.addEventListener(
-  "input",
-  (event) => {
-    const field =
-      event.target;
-
-    if (
-      !(
-        field instanceof
-        HTMLInputElement
-      ) &&
-      !(
-        field instanceof
-        HTMLTextAreaElement
-      )
-    ) {
+  function setLoading(loading) {
+    if (!contactSubmit) {
       return;
     }
 
-    clearFieldError(field);
+    contactSubmit.disabled = loading;
 
+    contactSubmit.classList.toggle(
+      "is-loading",
+      loading
+    );
+
+    contactSubmit.setAttribute(
+      "aria-busy",
+      String(loading)
+    );
+  }
+
+  function updateMessageCounter() {
     if (
-      contactFormStatus?.classList.contains(
-        "is-error"
-      )
+      messageInput &&
+      messageCounter
     ) {
-      setFormStatus("");
+      messageCounter.textContent =
+        `${messageInput.value.length} / 2000`;
     }
   }
-);
 
+  function getErrorElement(field) {
+    return document.querySelector(
+      `[data-error-for="${field.id}"]`
+    );
+  }
 
-/* ----------------------------------------------
-   ENVÍO
----------------------------------------------- */
+  function clearFieldError(field) {
+    field.classList.remove(
+      "is-invalid"
+    );
 
-contactForm?.addEventListener(
-  "submit",
-  async (event) => {
-    event.preventDefault();
+    field.removeAttribute(
+      "aria-invalid"
+    );
 
-    setFormStatus("");
+    const errorElement =
+      getErrorElement(field);
 
+    if (errorElement) {
+      errorElement.textContent = "";
+    }
+  }
 
-    /*
-      Honeypot antispam.
-      Los usuarios reales nunca completan este campo.
-    */
+  function showFieldError(
+    field,
+    message
+  ) {
+    field.classList.add(
+      "is-invalid"
+    );
 
-    const honeypot =
-      contactForm.elements.company;
+    field.setAttribute(
+      "aria-invalid",
+      "true"
+    );
 
-    if (
-      honeypot &&
-      honeypot.value.trim() !== ""
-    ) {
-      contactForm.reset();
+    const errorElement =
+      getErrorElement(field);
 
-      updateMessageCounter();
+    if (errorElement) {
+      errorElement.textContent =
+        message;
+    }
+  }
 
-      return;
+  function clearAllFieldErrors() {
+    contactForm
+      ?.querySelectorAll(
+        "input, textarea"
+      )
+      .forEach((field) => {
+        clearFieldError(field);
+      });
+  }
+
+  function validateContactForm() {
+    if (!contactForm) {
+      return false;
     }
 
+    clearAllFieldErrors();
 
-    if (!validateContactForm()) {
-      setFormStatus(
-        "Please review the highlighted fields.",
-        "error"
+    const nameField =
+      contactForm.elements.from_name;
+
+    const emailField =
+      contactForm.elements.reply_to;
+
+    const messageField =
+      contactForm.elements.message;
+
+    let valid = true;
+
+    if (
+      nameField.value
+        .trim()
+        .length < 2
+    ) {
+      showFieldError(
+        nameField,
+        "Please enter your name."
       );
 
-      contactForm
-        .querySelector(
-          ".is-invalid"
-        )
-        ?.focus();
-
-      return;
+      valid = false;
     }
 
+    if (!emailField.value.trim()) {
+      showFieldError(
+        emailField,
+        "Please enter your email."
+      );
 
-    /*
-      Evita dobles envíos rápidos.
-    */
+      valid = false;
+    } else if (
+      !emailField.validity.valid
+    ) {
+      showFieldError(
+        emailField,
+        "Please enter a valid email address."
+      );
 
-    const currentTime =
-      Date.now();
-
-    const elapsedTime =
-      currentTime -
-      lastContactSubmission;
+      valid = false;
+    }
 
     if (
-      elapsedTime <
-      CONTACT_COOLDOWN_MS
+      messageField.value
+        .trim()
+        .length < 10
     ) {
-      const remainingSeconds =
-        Math.ceil(
-          (
-            CONTACT_COOLDOWN_MS -
-            elapsedTime
-          ) /
-          1000
+      showFieldError(
+        messageField,
+        "Please enter at least 10 characters."
+      );
+
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  if (typeof emailjs !== "undefined") {
+    emailjs.init({
+      publicKey: EMAILJS_PUBLIC_KEY
+    });
+  } else {
+    console.error(
+      "No se pudo cargar EmailJS."
+    );
+  }
+
+  messageInput?.addEventListener(
+    "input",
+    updateMessageCounter
+  );
+
+  contactForm?.addEventListener(
+    "input",
+    (event) => {
+      const field = event.target;
+
+      if (
+        field instanceof
+          HTMLInputElement ||
+        field instanceof
+          HTMLTextAreaElement
+      ) {
+        clearFieldError(field);
+      }
+
+      if (
+        contactStatus?.classList.contains(
+          "is-error"
+        )
+      ) {
+        setFormStatus("");
+      }
+    }
+  );
+
+  contactForm?.addEventListener(
+    "submit",
+    async (event) => {
+      event.preventDefault();
+
+      setFormStatus("");
+
+      const honeypot =
+        contactForm.elements.company;
+
+      if (honeypot?.value.trim()) {
+        contactForm.reset();
+        updateMessageCounter();
+        return;
+      }
+
+      if (!validateContactForm()) {
+        setFormStatus(
+          "Please review the highlighted fields.",
+          "error"
         );
 
-      setFormStatus(
-        `Please wait ${remainingSeconds} seconds before sending another message.`,
-        "error"
-      );
+        contactForm
+          .querySelector(".is-invalid")
+          ?.focus();
 
-      return;
-    }
-
-
-    if (
-      typeof emailjs ===
-      "undefined"
-    ) {
-      setFormStatus(
-        "The email service is unavailable. Please contact me directly at ironiizx10@gmail.com.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    if (contactTime) {
-  contactTime.value =
-    new Date().toLocaleString(
-      "es-AR",
-      {
-        dateStyle: "full",
-        timeStyle: "medium"
+        return;
       }
-    );
-}
 
-    setContactLoading(true);
+      const elapsed =
+        Date.now() -
+        lastSubmission;
 
-    setFormStatus(
-      "Sending your message..."
-    );
+      if (elapsed < CONTACT_COOLDOWN) {
+        const seconds =
+          Math.ceil(
+            (
+              CONTACT_COOLDOWN -
+              elapsed
+            ) /
+            1000
+          );
 
+        setFormStatus(
+          `Please wait ${seconds} seconds before sending another message.`,
+          "error"
+        );
 
-    try {
-      await emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        contactForm,
-        {
-          publicKey:
-            EMAILJS_PUBLIC_KEY
-        }
-      );
+        return;
+      }
 
+      if (
+        typeof emailjs ===
+        "undefined"
+      ) {
+        setFormStatus(
+          "The email service is unavailable. Please contact me directly at ironiizx10@gmail.com.",
+          "error"
+        );
 
-      lastContactSubmission =
-        Date.now();
+        return;
+      }
 
-      contactForm.reset();
+      if (contactTime) {
+        contactTime.value =
+          new Date().toLocaleString(
+            "es-AR",
+            {
+              dateStyle: "full",
+              timeStyle: "medium"
+            }
+          );
+      }
 
-      clearAllFieldErrors();
-
-      updateMessageCounter();
+      setLoading(true);
 
       setFormStatus(
-        "Message sent successfully. I’ll get back to you as soon as possible.",
-        "success"
-      );
-    } catch (error) {
-      console.error(
-        "EmailJS error:",
-        error
+        "Sending your message..."
       );
 
-      setFormStatus(
-        "Your message could not be sent. Please try again or contact me directly by email.",
-        "error"
-      );
-    } finally {
-      setContactLoading(false);
+      try {
+        await emailjs.sendForm(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          contactForm,
+          {
+            publicKey:
+              EMAILJS_PUBLIC_KEY
+          }
+        );
+
+        lastSubmission = Date.now();
+
+        contactForm.reset();
+        clearAllFieldErrors();
+        updateMessageCounter();
+
+        setFormStatus(
+          "Message sent successfully. I’ll get back to you as soon as possible.",
+          "success"
+        );
+      } catch (error) {
+        console.error(
+          "EmailJS error:",
+          error
+        );
+
+        setFormStatus(
+          "Your message could not be sent. Please try again or contact me directly by email.",
+          "error"
+        );
+      } finally {
+        setLoading(false);
+      }
     }
-  }
-);
+  );
 
+  updateMessageCounter();
 
-updateMessageCounter();
+  // Carga inicial y resize
 
-
-  /* ==================================================
-     CARGA INICIAL CON HASH
-  ================================================== */
-
-  function positionFromCurrentHash() {
-    const destination =
+  function positionFromHash() {
+    const hash =
       window.location.hash;
 
     if (
-      !destination ||
-      destination === "#home"
+      !hash ||
+      hash === "#home"
     ) {
-      updateActiveNavigation(
-        "home"
-      );
-
+      setActiveLink("home");
       return;
     }
 
     const target =
-      document.querySelector(
-        destination
-      );
+      document.querySelector(hash);
 
     if (!target) {
-      updateActiveNavigation(
-        "home"
-      );
-
+      setActiveLink("home");
       return;
     }
 
     lenis.scrollTo(target, {
-      offset:
-        -getHeaderHeight(),
-
+      offset: -getHeaderHeight(),
       immediate: true
     });
 
-    updateActiveNavigation(
-      target.id
-    );
+    setActiveLink(target.id);
   }
 
-
   requestAnimationFrame(() => {
-    positionFromCurrentHash();
+    positionFromHash();
     updateCurrentSection();
   });
-
-
-  /* ==================================================
-     AJUSTE AL CAMBIAR EL TAMAÑO
-  ================================================== */
 
   let resizeTimer;
 
@@ -2331,18 +1836,14 @@ updateMessageCounter();
       );
 
       resizeTimer =
-        window.setTimeout(
-          () => {
-            lenis.resize();
-            updateCurrentSection();
-          },
-          120
-        );
+        window.setTimeout(() => {
+          lenis.resize();
+          updateCurrentSection();
+
+          if (window.innerWidth > 820) {
+            closeMenu();
+          }
+        }, 120);
     }
-  );
-
-
-  console.log(
-    "Lenis, carrusel del Hero, About, Services, Packs, galería dinámica, galería completa y lightbox funcionando correctamente."
   );
 });
