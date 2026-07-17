@@ -3,39 +3,31 @@
 
 <head>
   <meta charset="UTF-8">
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
-
   <meta
     name="description"
     content="Portfolio of iRoniiZx, a Fortnite and UEFN thumbnail designer and visual artist."
   >
 
-  <title>
-    iRoniiZx | Thumbnail Designer & 3D Artist
-  </title>
+  <title>iRoniiZx | Fortnite & UEFN Thumbnail Designer</title>
 
-    <link
+  <link
     rel="icon"
     type="image/png"
     href="/assets/images/ironiizx-icon.png"
-    >
-
-    <link
+  >
+  <link
     rel="apple-touch-icon"
     href="/assets/images/ironiizx-icon.png"
-    >
+  >
 
-  <!-- Lenis Smooth Scroll -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/lenis@1.3.25/dist/lenis.css"
   >
-
-  <!-- CSS principal -->
   <link
     rel="stylesheet"
     href="/css/styles.css"
@@ -44,12 +36,9 @@
 
 <body>
 
-  <!-- ==================================================
-       HEADER
-  =================================================== -->
+  <!-- Header -->
 
   <header class="header">
-
     <nav
       class="navbar container"
       aria-label="Main navigation"
@@ -61,21 +50,32 @@
         aria-label="Go to home"
       >
         <span class="navbar__logo-symbol">
-        <img
+          <img
             src="/assets/images/ironiizx-icon.png"
             alt=""
-            aria-hidden="true"
-        >
+          >
         </span>
 
-        <span>
-          iRoniiZx
-        </span>
+        <span>iRoniiZx</span>
       </a>
 
+      <button
+        class="navbar__toggle"
+        id="navbar-toggle"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-controls="navbar-menu"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-      <ul class="navbar__links">
-
+      <ul
+        class="navbar__links"
+        id="navbar-menu"
+      >
         <li>
           <a
             class="navbar__link active"
@@ -138,9 +138,7 @@
             Contact
           </a>
         </li>
-
       </ul>
-
 
       <a
         class="commission-status"
@@ -152,27 +150,21 @@
           aria-hidden="true"
         ></span>
 
-        <span>
-          Open Commissions
-        </span>
+        <span>Open Commissions</span>
 
-        <span class="button__icon commission-status__arrow" aria-hidden="true"></span>
+        <span
+          class="button__icon commission-status__arrow"
+          aria-hidden="true"
+        ></span>
       </a>
 
     </nav>
-
   </header>
 
 
-  <!-- ==================================================
-       CONTENIDO PRINCIPAL
-  =================================================== -->
-
   <main>
 
-    <!-- ==================================================
-         HOME
-    =================================================== -->
+    <!-- Hero -->
 
     <section
       class="hero"
@@ -180,14 +172,11 @@
       aria-labelledby="hero-title"
     >
 
-      <!-- Carrusel automático de miniaturas -->
-
       <div
         class="hero-carousel"
         id="hero-carousel"
         aria-hidden="true"
       >
-
         <img
           class="hero-carousel__image hero-carousel__image--current"
           id="hero-carousel-current"
@@ -203,41 +192,32 @@
           alt=""
           draggable="false"
         >
-
       </div>
-
-
-      <!-- Capa oscura sobre el carrusel -->
 
       <div
         class="hero__overlay"
         aria-hidden="true"
       ></div>
 
-
-      <!-- Contenido principal del Hero -->
-
       <div class="hero__content container">
 
         <div
-        class="hero__brand-decoration"
-        aria-hidden="true"
+          class="hero__brand-decoration"
+          aria-hidden="true"
         >
-        <span></span>
+          <span></span>
 
-        <img
+          <img
             src="/assets/images/ironiizx-icon.png"
             alt=""
-        >
+          >
 
-        <span></span>
+          <span></span>
         </div>
-
 
         <p class="hero__eyebrow">
           Fortnite / UEFN Thumbnail Designer & Visual Artist
         </p>
-
 
         <h1
           class="hero__title"
@@ -245,15 +225,10 @@
         >
           Thumbnails
           <br>
-
           built to
           <br>
-
-          <span>
-            win clicks
-          </span>
+          <span>win clicks</span>
         </h1>
-
 
         <p class="hero__description">
           High-impact Fortnite and UEFN thumbnails created through
@@ -261,82 +236,75 @@
           click-focused visual direction.
         </p>
 
-
         <div class="hero__actions">
-
           <a
             class="button button--primary"
             href="#work"
           >
-            View My Work
-
-            <span class="button__icon" aria-hidden="true"></span>
+            <span>View My Work</span>
+            <span
+              class="button__icon"
+              aria-hidden="true"
+            ></span>
           </a>
-
 
           <a
             class="button button--outline"
             href="#contact"
           >
-            Contact Me
-
-            <span class="button__icon" aria-hidden="true"></span>
+            <span>Contact Me</span>
+            <span
+              class="button__icon"
+              aria-hidden="true"
+            ></span>
           </a>
-
         </div>
 
       </div>
-
     </section>
 
 
-    <!-- ==================================================
-         ABOUT
-    =================================================== -->
+    <!-- About -->
 
     <section
       class="about section"
       id="about"
       aria-labelledby="about-title"
     >
-
       <div class="section__container about__container">
 
-        <div class="about__watermark" aria-hidden="true">
-            <img src="/assets/images/ironiizx-icon.png" alt="">
+        <div
+          class="about__watermark"
+          aria-hidden="true"
+        >
+          <img
+            src="/assets/images/ironiizx-icon.png"
+            alt=""
+          >
         </div>
 
         <div class="about__layout">
 
           <header class="about__heading">
-
             <p class="section-heading__eyebrow">
               Who I Am
             </p>
-
 
             <h2
               class="about__title"
               id="about-title"
             >
               About
-
-              <span>
-                me
-              </span>
+              <span>me</span>
             </h2>
-
 
             <p class="about__lead">
               Thumbnail designer and visual artist specialized
               in Fortnite and UEFN.
             </p>
-
           </header>
 
-
           <div class="about__content">
-
             <p>
               I’m Ronen Saidman, also known as
               <strong>iRoniiZx</strong>. Since 2019, I’ve worked
@@ -344,7 +312,6 @@
               thumbnails for Fortnite maps, events and major
               UEFN updates.
             </p>
-
 
             <p>
               My workflow combines custom 3D production,
@@ -355,7 +322,6 @@
               production method.
             </p>
 
-
             <p>
               Beyond making a thumbnail look attractive, I focus
               on creating visuals that communicate clearly,
@@ -364,124 +330,88 @@
               and Discover systems.
             </p>
 
-
             <blockquote class="about__statement">
-
-              <span>
-                More than a thumbnail
-              </span>
-
+              <span>More than a thumbnail</span>
               A visual identity built to get noticed
-
             </blockquote>
-
           </div>
 
         </div>
 
-
         <div class="about__facts">
 
           <article class="about-fact">
-
             <span class="about-fact__label">
               Working Since
             </span>
-
             <strong class="about-fact__value">
               2019
             </strong>
-
           </article>
 
-
           <article class="about-fact">
-
             <span class="about-fact__label">
               Specialized In
             </span>
-
             <strong class="about-fact__value">
               Fortnite / UEFN
             </strong>
-
           </article>
 
-
           <article class="about-fact">
-
             <span class="about-fact__label">
               Production
             </span>
-
             <strong class="about-fact__value">
               Custom 3D
             </strong>
-
           </article>
 
-
           <article class="about-fact">
-
             <span class="about-fact__label">
               Visual Style
             </span>
-
             <strong class="about-fact__value">
               AI-Assisted Cartoon
             </strong>
-
           </article>
 
         </div>
 
       </div>
-
     </section>
 
 
-    <!-- ==================================================
-         IMPACT
-    =================================================== -->
+    <!-- Impact -->
 
     <section
       class="impact"
       id="impact"
       aria-labelledby="impact-title"
     >
-
       <div class="impact__inner">
 
         <div class="impact__heading stats__heading">
-
           <p class="impact__eyebrow">
             Career Snapshot
           </p>
-
 
           <h2
             class="impact__title"
             id="impact-title"
           >
             Impact
-
-            <span>
-              in numbers
-            </span>
+            <span>in numbers</span>
           </h2>
-
 
           <p class="impact__description">
             Built with creators. Seen by millions.
           </p>
-
         </div>
-
 
         <div class="impact__stats stats__grid">
 
           <article class="impact-stat">
-
             <strong
               class="impact-stat__value"
               data-counter
@@ -495,12 +425,9 @@
             <span class="impact-stat__label">
               Thumbnails Created
             </span>
-
           </article>
 
-
           <article class="impact-stat">
-
             <strong
               class="impact-stat__value"
               data-counter
@@ -513,12 +440,9 @@
             <span class="impact-stat__label">
               Creators & Studios
             </span>
-
           </article>
 
-
           <article class="impact-stat">
-
             <strong
               class="impact-stat__value"
               data-counter
@@ -532,12 +456,9 @@
             <span class="impact-stat__label">
               Peak Concurrent Players
             </span>
-
           </article>
 
-
           <article class="impact-stat">
-
             <strong
               class="impact-stat__value"
               data-counter
@@ -550,18 +471,14 @@
             <span class="impact-stat__label">
               Major Events & Updates
             </span>
-
           </article>
 
         </div>
 
-
         <div class="collaborations">
 
           <div class="collaborations__heading">
-
             <div class="collaborations__heading-text">
-
               <p class="collaborations__eyebrow">
                 Selected Creators & Studios
               </p>
@@ -569,17 +486,13 @@
               <p class="collaborations__description">
                 A selection of creators and teams I’ve collaborated with.
               </p>
-
             </div>
-
 
             <span
               class="collaborations__line"
               aria-hidden="true"
             ></span>
-
           </div>
-
 
           <div class="collaborations__grid">
 
@@ -590,9 +503,7 @@
               rel="noopener noreferrer"
               aria-label="View Ferins on Fortnite.GG"
             >
-
               <div class="client-card__avatar">
-
                 <span
                   class="client-card__fallback"
                   aria-hidden="true"
@@ -606,15 +517,12 @@
                   loading="lazy"
                   onerror="this.style.display='none'"
                 >
-
               </div>
 
               <span class="client-card__name">
                 Ferins
               </span>
-
             </a>
-
 
             <a
               class="client-card"
@@ -623,9 +531,7 @@
               rel="noopener noreferrer"
               aria-label="View Pandvil on Fortnite.GG"
             >
-
               <div class="client-card__avatar">
-
                 <span
                   class="client-card__fallback"
                   aria-hidden="true"
@@ -639,15 +545,12 @@
                   loading="lazy"
                   onerror="this.style.display='none'"
                 >
-
               </div>
 
               <span class="client-card__name">
                 Pandvil
               </span>
-
             </a>
-
 
             <a
               class="client-card"
@@ -656,9 +559,7 @@
               rel="noopener noreferrer"
               aria-label="View Jogo on Fortnite.GG"
             >
-
               <div class="client-card__avatar">
-
                 <span
                   class="client-card__fallback"
                   aria-hidden="true"
@@ -672,15 +573,12 @@
                   loading="lazy"
                   onerror="this.style.display='none'"
                 >
-
               </div>
 
               <span class="client-card__name">
                 Jogo
               </span>
-
             </a>
-
 
             <a
               class="client-card"
@@ -689,9 +587,7 @@
               rel="noopener noreferrer"
               aria-label="View FOAD on Fortnite.GG"
             >
-
               <div class="client-card__avatar">
-
                 <span
                   class="client-card__fallback"
                   aria-hidden="true"
@@ -705,15 +601,12 @@
                   loading="lazy"
                   onerror="this.style.display='none'"
                 >
-
               </div>
 
               <span class="client-card__name">
                 FOAD
               </span>
-
             </a>
-
 
             <a
               class="client-card"
@@ -722,9 +615,7 @@
               rel="noopener noreferrer"
               aria-label="View PrettyBoy on Fortnite.GG"
             >
-
               <div class="client-card__avatar">
-
                 <span
                   class="client-card__fallback"
                   aria-hidden="true"
@@ -738,15 +629,12 @@
                   loading="lazy"
                   onerror="this.style.display='none'"
                 >
-
               </div>
 
               <span class="client-card__name">
                 PrettyBoy
               </span>
-
             </a>
-
 
             <a
               class="client-card"
@@ -755,9 +643,7 @@
               rel="noopener noreferrer"
               aria-label="View GoodGamers on Fortnite.GG"
             >
-
               <div class="client-card__avatar">
-
                 <span
                   class="client-card__fallback"
                   aria-hidden="true"
@@ -771,15 +657,12 @@
                   loading="lazy"
                   onerror="this.style.display='none'"
                 >
-
               </div>
 
               <span class="client-card__name">
                 GoodGamers
               </span>
-
             </a>
-
 
             <a
               class="client-card"
@@ -788,9 +671,7 @@
               rel="noopener noreferrer"
               aria-label="View RVB on Fortnite.GG"
             >
-
               <div class="client-card__avatar">
-
                 <span
                   class="client-card__fallback"
                   aria-hidden="true"
@@ -804,15 +685,12 @@
                   loading="lazy"
                   onerror="this.style.display='none'"
                 >
-
               </div>
 
               <span class="client-card__name">
                 RVB
               </span>
-
             </a>
-
 
             <a
               class="client-card"
@@ -821,9 +699,7 @@
               rel="noopener noreferrer"
               aria-label="View Chartis on Fortnite.GG"
             >
-
               <div class="client-card__avatar">
-
                 <span
                   class="client-card__fallback"
                   aria-hidden="true"
@@ -837,42 +713,33 @@
                   loading="lazy"
                   onerror="this.style.display='none'"
                 >
-
               </div>
 
               <span class="client-card__name">
                 Chartis
               </span>
-
             </a>
 
           </div>
-
         </div>
 
       </div>
-
     </section>
 
 
-    <!-- ==================================================
-         WORK
-    =================================================== -->
+    <!-- Work -->
 
     <section
       class="work section"
       id="work"
       aria-labelledby="work-title"
     >
-
       <div class="section__container">
 
         <div class="section-heading">
-
           <p class="section-heading__eyebrow">
             Work
           </p>
-
 
           <h2
             class="section-heading__title"
@@ -881,20 +748,17 @@
             Selected Work
           </h2>
 
-
           <p class="section-heading__description">
             A selection of Fortnite and UEFN thumbnails
             organized by category.
           </p>
-
         </div>
-
 
         <div
           class="category-filters"
+          role="group"
           aria-label="Project categories"
         >
-
           <button
             class="category-filter active"
             type="button"
@@ -904,7 +768,6 @@
           >
             All
           </button>
-
 
           <button
             class="category-filter"
@@ -916,7 +779,6 @@
             Brainrot
           </button>
 
-
           <button
             class="category-filter"
             type="button"
@@ -926,7 +788,6 @@
           >
             PVP/1v1
           </button>
-
 
           <button
             class="category-filter"
@@ -938,7 +799,6 @@
             Tycoon
           </button>
 
-
           <button
             class="category-filter"
             type="button"
@@ -948,7 +808,6 @@
           >
             Escape Room
           </button>
-
 
           <button
             class="category-filter"
@@ -960,7 +819,6 @@
             Deathrun/Parkour
           </button>
 
-
           <button
             class="category-filter"
             type="button"
@@ -970,7 +828,6 @@
           >
             Pillars
           </button>
-
 
           <button
             class="category-filter"
@@ -982,7 +839,6 @@
             Car/Vehicles
           </button>
 
-
           <button
             class="category-filter"
             type="button"
@@ -993,7 +849,6 @@
             Gun Game
           </button>
 
-
           <button
             class="category-filter"
             type="button"
@@ -1003,9 +858,7 @@
           >
             Others
           </button>
-
         </div>
-
 
         <div
           class="gallery"
@@ -1013,79 +866,59 @@
           aria-label="Selected thumbnail projects"
           aria-live="polite"
         >
-
           <p class="gallery__empty">
             Loading projects...
           </p>
-
         </div>
-
 
         <div
           class="gallery-preview__footer"
           id="gallery-view-more-wrapper"
           hidden
         >
+          <button
+            class="button button--outline gallery-preview__button"
+            id="gallery-view-more"
+            type="button"
+            aria-controls="gallery-panel"
+          >
+            <span>View More</span>
 
- <button
-  class="button button--outline gallery-preview__button"
-  id="gallery-view-more"
-  type="button"
-  aria-controls="gallery-panel"
->
-  <span>View More</span>
-
-  <span
-    class="button__icon"
-    aria-hidden="true"
-  ></span>
-</button>
-
+            <span
+              class="button__icon"
+              aria-hidden="true"
+            ></span>
+          </button>
         </div>
 
       </div>
-
     </section>
 
 
-    <!-- ==================================================
-         SERVICES
-    =================================================== -->
+    <!-- Services -->
 
     <section
       class="services section"
       id="services"
       aria-labelledby="services-title"
     >
-
       <div class="section__container">
 
         <header class="services__intro">
-
           <p class="section-heading__eyebrow">
             Services
           </p>
-
 
           <h2
             class="services__title"
             id="services-title"
           >
             Built for
-
-            <span>
-              approval
-            </span>
-
+            <span>approval</span>
             <br>
-
             Designed for
-
-            <span>
-              discovery
-            </span>
+            <span>discovery</span>
           </h2>
-
 
           <p class="services__description">
             A great thumbnail should do more than look attractive.
@@ -1093,16 +926,12 @@
             inside Fortnite Discover and adapt to Epic’s evolving
             thumbnail systems.
           </p>
-
         </header>
-
 
         <div class="services__grid">
 
           <article class="service-card">
-
             <div class="service-card__top">
-
               <div
                 class="service-card__icon"
                 aria-hidden="true"
@@ -1123,14 +952,11 @@
               <span class="service-card__number">
                 01
               </span>
-
             </div>
-
 
             <h3 class="service-card__title">
               Approval-Focused Design
             </h3>
-
 
             <p class="service-card__description">
               A cleaner and more controlled version designed
@@ -1138,35 +964,19 @@
               and similarity systems.
             </p>
 
-
             <ul class="service-card__list">
-
-              <li>
-                Cleaner visual composition
-              </li>
-
-              <li>
-                Controlled visual elements
-              </li>
-
-              <li>
-                Similarity-aware testing
-              </li>
-
+              <li>Cleaner visual composition</li>
+              <li>Controlled visual elements</li>
+              <li>Similarity-aware testing</li>
             </ul>
-
 
             <span class="service-card__badge">
               Approval-Aware
             </span>
-
           </article>
 
-
           <article class="service-card">
-
             <div class="service-card__top">
-
               <div
                 class="service-card__icon"
                 aria-hidden="true"
@@ -1190,14 +1000,11 @@
               <span class="service-card__number">
                 02
               </span>
-
             </div>
-
 
             <h3 class="service-card__title">
               Discovery-Focused Visuals
             </h3>
-
 
             <p class="service-card__description">
               Strong, unique and readable thumbnails created
@@ -1205,35 +1012,19 @@
               within seconds.
             </p>
 
-
             <ul class="service-card__list">
-
-              <li>
-                Strong visual hierarchy
-              </li>
-
-              <li>
-                Clear and immediate focal point
-              </li>
-
-              <li>
-                Thumbnail-size readability
-              </li>
-
+              <li>Strong visual hierarchy</li>
+              <li>Clear and immediate focal point</li>
+              <li>Thumbnail-size readability</li>
             </ul>
-
 
             <span class="service-card__badge">
               Discover-Focused
             </span>
-
           </article>
 
-
           <article class="service-card">
-
             <div class="service-card__top">
-
               <div
                 class="service-card__icon"
                 aria-hidden="true"
@@ -1257,14 +1048,11 @@
               <span class="service-card__number">
                 03
               </span>
-
             </div>
-
 
             <h3 class="service-card__title">
               Custom Visual Production
             </h3>
-
 
             <p class="service-card__description">
               A flexible visual workflow adapted to the
@@ -1272,35 +1060,19 @@
               of each individual project.
             </p>
 
-
             <ul class="service-card__list">
-
-              <li>
-                Custom 3D renders
-              </li>
-
-              <li>
-                AI-assisted cartoon artwork
-              </li>
-
-              <li>
-                Hybrid compositing and VFX
-              </li>
-
+              <li>Custom 3D renders</li>
+              <li>AI-assisted cartoon artwork</li>
+              <li>Hybrid compositing and VFX</li>
             </ul>
-
 
             <span class="service-card__badge">
               Custom Built
             </span>
-
           </article>
 
-
           <article class="service-card">
-
             <div class="service-card__top">
-
               <div
                 class="service-card__icon"
                 aria-hidden="true"
@@ -1322,46 +1094,29 @@
               <span class="service-card__number">
                 04
               </span>
-
             </div>
-
 
             <h3 class="service-card__title">
               Two-Version Workflow
             </h3>
-
 
             <p class="service-card__description">
               Two complementary versions created for different
               stages of the publishing and promotional process.
             </p>
 
-
             <ul class="service-card__list">
-
-              <li>
-                Approval-focused base version
-              </li>
-
-              <li>
-                Final polished visual version
-              </li>
-
-              <li>
-                Flexible testing and delivery
-              </li>
-
+              <li>Approval-focused base version</li>
+              <li>Final polished visual version</li>
+              <li>Flexible testing and delivery</li>
             </ul>
-
 
             <span class="service-card__badge">
               Flexible Delivery
             </span>
-
           </article>
 
         </div>
-
 
         <p class="services__disclaimer">
           Epic approval can never be guaranteed. This workflow
@@ -1370,20 +1125,16 @@
           and publishing their thumbnails.
         </p>
 
-
         <aside class="services-proof">
 
           <div class="services-proof__content">
-
             <p class="services-proof__eyebrow">
               Official Perspective
             </p>
 
-
             <h3 class="services-proof__title">
               Thumbnails are part of the product
             </h3>
-
 
             <p class="services-proof__description">
               Fortnite Developers has publicly emphasized that
@@ -1392,87 +1143,68 @@
               inside Discover.
             </p>
 
-
             <p class="services-proof__highlight">
               High-quality thumbnails should never be treated
               as an afterthought.
             </p>
-
 
             <p class="services-proof__note">
               Public guidance shared by Fortnite Developers.
               Displayed as industry context, not as a direct
               endorsement of this service.
             </p>
-
           </div>
 
-
           <figure class="services-proof__media">
-
             <img
               src="/assets/thumbnails/tweet.png"
-              alt="Fortnite Developers post explaining the importance of strong and unique thumbnails in Discover"
+              alt="Fortnite Developers post about the importance of strong and unique thumbnails in Discover"
               loading="lazy"
             >
 
             <figcaption>
-              Official Fortnite Developers post about
-              thumbnails and player engagement in Discover.
+              Official Fortnite Developers post about thumbnails
+              and player engagement in Discover.
             </figcaption>
-
           </figure>
 
         </aside>
 
       </div>
-
     </section>
 
 
-    <!-- ==================================================
-         ASSET PACKS / PAYHIP
-    =================================================== -->
+    <!-- Asset packs -->
 
     <section
       class="packs section"
       id="packs"
       aria-labelledby="packs-title"
     >
-
       <div class="section__container">
 
         <header class="packs__intro">
-
           <p class="section-heading__eyebrow">
             Payhip Store
           </p>
-
 
           <h2
             class="packs__title"
             id="packs-title"
           >
             Asset
-
-            <span>
-              packs
-            </span>
+            <span>packs</span>
           </h2>
-
 
           <p class="packs__description">
             Ready-to-use visual resources created for Fortnite,
             UEFN and thumbnail designers.
           </p>
-
         </header>
-
 
         <div class="packs__grid">
 
           <article class="pack-card">
-
             <a
               class="pack-card__media"
               href="https://payhip.com/b/oP2IG"
@@ -1480,7 +1212,6 @@
               rel="noopener noreferrer"
               aria-label="View iRoniiZx Asset Pack V1 on Payhip"
             >
-
               <img
                 src="/assets/images/pack1.avif"
                 alt="iRoniiZx Asset Pack V1 cover"
@@ -1490,16 +1221,11 @@
               <span class="pack-card__version">
                 V1
               </span>
-
             </a>
 
-
             <div class="pack-card__content">
-
               <div class="pack-card__heading">
-
                 <div>
-
                   <p class="pack-card__eyebrow">
                     Original Collection
                   </p>
@@ -1507,16 +1233,12 @@
                   <h3 class="pack-card__title">
                     iRoniiZx Asset Pack
                   </h3>
-
                 </div>
-
 
                 <strong class="pack-card__price">
                   $50.00
                 </strong>
-
               </div>
-
 
               <p class="pack-card__description">
                 The original iRoniiZx collection of visual
@@ -1524,25 +1246,23 @@
                 UEFN thumbnail production.
               </p>
 
-
               <a
                 class="button button--primary pack-card__button"
                 href="https://payhip.com/b/oP2IG"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Buy Pack V1
+                <span>Buy Pack V1</span>
 
-                <span class="button__icon" aria-hidden="true"></span>
+                <span
+                  class="button__icon"
+                  aria-hidden="true"
+                ></span>
               </a>
-
             </div>
-
           </article>
 
-
           <article class="pack-card">
-
             <a
               class="pack-card__media"
               href="https://payhip.com/b/bR71M"
@@ -1550,7 +1270,6 @@
               rel="noopener noreferrer"
               aria-label="View iRoniiZx Asset Pack V2 on Payhip"
             >
-
               <img
                 src="/assets/images/pack2.avif"
                 alt="iRoniiZx Asset Pack V2 cover"
@@ -1560,16 +1279,11 @@
               <span class="pack-card__version">
                 V2
               </span>
-
             </a>
 
-
             <div class="pack-card__content">
-
               <div class="pack-card__heading">
-
                 <div>
-
                   <p class="pack-card__eyebrow">
                     Second Collection
                   </p>
@@ -1577,16 +1291,12 @@
                   <h3 class="pack-card__title">
                     iRoniiZx Asset Pack V2
                   </h3>
-
                 </div>
-
 
                 <strong class="pack-card__price">
                   $25.00
                 </strong>
-
               </div>
-
 
               <p class="pack-card__description">
                 A second collection of ready-to-use visual
@@ -1594,24 +1304,23 @@
                 your thumbnail workflow.
               </p>
 
-
               <a
                 class="button button--primary pack-card__button"
                 href="https://payhip.com/b/bR71M"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Buy Pack V2
+                <span>Buy Pack V2</span>
 
-                <span class="button__icon" aria-hidden="true"></span>
+                <span
+                  class="button__icon"
+                  aria-hidden="true"
+                ></span>
               </a>
-
             </div>
-
           </article>
 
         </div>
-
 
         <p class="packs__note">
           Purchases and digital downloads are securely processed
@@ -1619,28 +1328,22 @@
         </p>
 
       </div>
-
     </section>
 
 
-    <!-- ==================================================
-         CONTACT
-    =================================================== -->
+    <!-- Contact -->
 
     <section
       class="contact section"
       id="contact"
       aria-labelledby="contact-title"
     >
-
       <div class="section__container">
 
         <div class="section-heading">
-
           <p class="section-heading__eyebrow">
             Contact
           </p>
-
 
           <h2
             class="section-heading__title"
@@ -1649,23 +1352,16 @@
             Let’s Work Together
           </h2>
 
-
           <p class="section-heading__description">
             Commissions are open. Let’s make thumbnails
             and make your map stand out.
           </p>
-
         </div>
-
 
         <div class="contact__layout">
 
           <div class="contact__socials">
-
-            <h3>
-              Connect With Me
-            </h3>
-
+            <h3>Connect With Me</h3>
 
             <a
               class="social-link"
@@ -1673,17 +1369,13 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>
-                X / Twitter
-              </span>
-
-              <strong>
-                @iRoniiZx
-              </strong>
-
-                <span class="button__icon" aria-hidden="true"></span>
+              <span>X / Twitter</span>
+              <strong>@iRoniiZx</strong>
+              <span
+                class="button__icon"
+                aria-hidden="true"
+              ></span>
             </a>
-
 
             <a
               class="social-link"
@@ -1691,17 +1383,13 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>
-                Behance
-              </span>
-
-              <strong>
-                iRoniiZx
-              </strong>
-
-                <span class="button__icon" aria-hidden="true"></span>
+              <span>Behance</span>
+              <strong>iRoniiZx</strong>
+              <span
+                class="button__icon"
+                aria-hidden="true"
+              ></span>
             </a>
-
 
             <a
               class="social-link"
@@ -1709,193 +1397,171 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>
-                LinkedIn
-              </span>
-
-              <strong>
-                Ronen Saidman
-              </strong>
-
-                <span class="button__icon" aria-hidden="true"></span>
+              <span>LinkedIn</span>
+              <strong>Ronen Saidman</strong>
+              <span
+                class="button__icon"
+                aria-hidden="true"
+              ></span>
             </a>
-
 
             <a
               class="social-link"
               href="mailto:ironiizx10@gmail.com"
             >
-              <span>
-                Email
-              </span>
-
-              <strong>
-                ironiizx10@gmail.com
-              </strong>
-
-                <span class="button__icon" aria-hidden="true"></span>
+              <span>Email</span>
+              <strong>ironiizx10@gmail.com</strong>
+              <span
+                class="button__icon"
+                aria-hidden="true"
+              ></span>
             </a>
-
           </div>
 
-
           <form
-  class="contact-form"
-  id="contact-form"
-  novalidate
->
+            class="contact-form"
+            id="contact-form"
+            novalidate
+          >
 
-  <div class="form-field">
+            <div class="form-field">
+              <label for="name">
+                Name
+              </label>
 
-    <label for="name">
-      Name
-    </label>
+              <input
+                id="name"
+                name="from_name"
+                type="text"
+                placeholder="Your name"
+                autocomplete="name"
+                minlength="2"
+                maxlength="80"
+                required
+              >
 
-    <input
-      id="name"
-      name="from_name"
-      type="text"
-      placeholder="Your name"
-      autocomplete="name"
-      minlength="2"
-      maxlength="80"
-      required
-    >
+              <small
+                class="form-field__error"
+                data-error-for="name"
+                aria-live="polite"
+              ></small>
+            </div>
 
-    <small
-      class="form-field__error"
-      data-error-for="name"
-      aria-live="polite"
-    ></small>
+            <div class="form-field">
+              <label for="email">
+                Email
+              </label>
 
-  </div>
+              <input
+                id="email"
+                name="reply_to"
+                type="email"
+                placeholder="your@email.com"
+                autocomplete="email"
+                maxlength="120"
+                required
+              >
 
+              <small
+                class="form-field__error"
+                data-error-for="email"
+                aria-live="polite"
+              ></small>
+            </div>
 
-  <div class="form-field">
+            <div class="form-field">
+              <label for="message">
+                Message
+              </label>
 
-    <label for="email">
-      Email
-    </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Tell me about your project..."
+                minlength="10"
+                maxlength="2000"
+                required
+              ></textarea>
 
-    <input
-      id="email"
-      name="reply_to"
-      type="email"
-      placeholder="your@email.com"
-      autocomplete="email"
-      maxlength="120"
-      required
-    >
+              <div class="form-field__footer">
+                <small
+                  class="form-field__error"
+                  data-error-for="message"
+                  aria-live="polite"
+                ></small>
 
-    <small
-      class="form-field__error"
-      data-error-for="email"
-      aria-live="polite"
-    ></small>
+                <small
+                  class="form-field__counter"
+                  id="message-counter"
+                >
+                  0 / 2000
+                </small>
+              </div>
+            </div>
 
-  </div>
+            <input
+              id="contact-time"
+              name="time"
+              type="hidden"
+              value=""
+            >
 
+            <div
+              class="contact-form__honeypot"
+              aria-hidden="true"
+            >
+              <label for="company">
+                Company
+              </label>
 
-  <div class="form-field">
+              <input
+                id="company"
+                name="company"
+                type="text"
+                tabindex="-1"
+                autocomplete="off"
+              >
+            </div>
 
-    <label for="message">
-      Message
-    </label>
+            <button
+              class="button button--primary contact-form__submit"
+              id="contact-submit"
+              type="submit"
+            >
+              <span class="contact-form__submit-text">
+                Send Message
+              </span>
 
-    <textarea
-      id="message"
-      name="message"
-      rows="5"
-      placeholder="Tell me about your project..."
-      minlength="10"
-      maxlength="2000"
-      required
-    ></textarea>
+              <span
+                class="contact-form__submit-arrow button__icon"
+                aria-hidden="true"
+              ></span>
 
-    <div class="form-field__footer">
+              <span
+                class="contact-form__spinner"
+                aria-hidden="true"
+              ></span>
+            </button>
 
-      <small
-        class="form-field__error"
-        data-error-for="message"
-        aria-live="polite"
-      ></small>
+            <p
+              class="contact-form__status"
+              id="contact-form-status"
+              role="status"
+              aria-live="polite"
+            ></p>
 
-      <small
-        class="form-field__counter"
-        id="message-counter"
-      >
-        0 / 2000
-      </small>
-
-    </div>
-
-  </div>
-
-
-  <!-- Campo antispam invisible -->
-
-  <div
-    class="contact-form__honeypot"
-    aria-hidden="true"
-  >
-
-    <label for="company">
-      Company
-    </label>
-
-    <input
-      id="company"
-      name="company"
-      type="text"
-      tabindex="-1"
-      autocomplete="off"
-    >
-
-  </div>
-
-
-  <button
-    class="button button--primary contact-form__submit"
-    id="contact-submit"
-    type="submit"
-  >
-
-    <span class="contact-form__submit-text">
-        
-      Send Message
-    </span>
-
-    <span class="contact-form__submit-arrow button__icon" aria-hidden="true"></span>
-
-    <span
-      class="contact-form__spinner"
-      aria-hidden="true"
-    ></span>
-
-  </button>
-
-
-  <p
-    class="contact-form__status"
-    id="contact-form-status"
-    role="status"
-    aria-live="polite"
-  ></p>
-
-</form>
+          </form>
 
         </div>
 
       </div>
-
     </section>
 
   </main>
 
 
-  <!-- ==================================================
-       GALERÍA COMPLETA
-  =================================================== -->
+  <!-- Galería completa -->
 
   <section
     class="gallery-panel"
@@ -1906,17 +1572,13 @@
     data-lenis-prevent
     hidden
   >
-
     <div class="gallery-panel__shell">
 
       <header class="gallery-panel__header">
-
         <div class="gallery-panel__heading">
-
           <p class="gallery-panel__eyebrow">
             Selected Work
           </p>
-
 
           <h2
             class="gallery-panel__title"
@@ -1925,16 +1587,13 @@
             All Projects
           </h2>
 
-
           <p
             class="gallery-panel__count"
             id="gallery-panel-count"
           >
             0 thumbnails
           </p>
-
         </div>
-
 
         <button
           class="gallery-panel__close"
@@ -1944,9 +1603,7 @@
         >
           ×
         </button>
-
       </header>
-
 
       <div
         class="gallery gallery-panel__grid"
@@ -1956,20 +1613,16 @@
       ></div>
 
     </div>
-
   </section>
 
 
-  <!-- ==================================================
-       VISOR DE MINIATURAS
-  =================================================== -->
+  <!-- Lightbox -->
 
   <dialog
     class="lightbox"
     id="lightbox"
     aria-label="Thumbnail viewer"
   >
-
     <div class="lightbox__content">
 
       <button
@@ -1981,7 +1634,6 @@
         ×
       </button>
 
-
       <button
         class="lightbox__navigation lightbox__navigation--previous"
         id="lightbox-previous"
@@ -1991,9 +1643,7 @@
         ‹
       </button>
 
-
       <div class="lightbox__image-wrapper">
-
         <img
           class="lightbox__image"
           id="lightbox-image"
@@ -2001,9 +1651,7 @@
           alt=""
           draggable="false"
         >
-
       </div>
-
 
       <button
         class="lightbox__navigation lightbox__navigation--next"
@@ -2014,7 +1662,6 @@
         ›
       </button>
 
-
       <p
         class="lightbox__counter"
         id="lightbox-counter"
@@ -2024,57 +1671,41 @@
       </p>
 
     </div>
-
   </dialog>
 
 
-  <!-- ==================================================
-       FOOTER
-  =================================================== -->
+  <!-- Footer -->
 
   <footer class="footer">
-
     <div class="container footer__content">
 
-        <a
+      <a
         class="footer__logo"
         href="#home"
         aria-label="Return to home"
-        >
+      >
         <img
-            src="/assets/images/ironiizx-icon.png"
-            alt=""
-            aria-hidden="true"
+          src="/assets/images/ironiizx-icon.png"
+          alt=""
         >
-
-        <span>
-            iRoniiZx
-        </span>
-        </a>
-
+        <span>iRoniiZx</span>
+      </a>
 
       <p>
         © 2026 iRoniiZx. All rights reserved.
       </p>
-
 
       <p>
         Designed and developed by Ronen Saidman.
       </p>
 
     </div>
-
   </footer>
 
 
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<!-- Lenis -->
-<script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
-
-<!-- JavaScript principal -->
-<script src="/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
+  <script src="/js/app.js"></script>
 
 </body>
 
