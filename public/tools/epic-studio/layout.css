@@ -12,3 +12,5 @@
 @media(max-width:540px){.has-source .layout-intro h1{font-size:23px}.has-source .layout-intro{margin:22px 0}.has-source .hero-art{height:210px}.has-source .hero-art[data-format^=portrait]{height:270px;max-width:202px}.has-source .hero-art[data-format=logo]{height:145px;margin:55px auto}}
 
 @media(max-width:540px){.topbar nav{display:flex}.stage-switch button{font-size:11px}.stage-views,.stage-views button{font-size:11px}.dock-title label{font-size:12px}.quiet-actions,.quiet-actions button{font-size:11px}.cleanup-actions button,.logo-options button{font-size:11px}}
+
+.layout-budget{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;border-top:1px solid #ffffff14;padding-top:12px;font-size:11px;line-height:1.5;font-variant-numeric:tabular-nums}.layout-budget strong{font-weight:600;color:#d4dfed}.layout-budget span{color:#9aaac0}.layout-budget[data-blocked=true] strong{color:#ffe266}
