@@ -45,3 +45,10 @@ Before enabling paid generation here, add server authentication, prepaid orders,
 - No real paid generation request was made during this change.
 
 The existing Express server serves these static files without additional dependencies. Review this change through the Vercel preview associated with the draft PR before merging into `main`.
+
+
+### Studio 12
+
+Shared creator UI updated to the immersive artwork preview, compact title/action dock, settings on demand, progress notifications and stage recovery. New packs preserve landscape pixels outside selected title regions, adapt portrait from the original reference, and compose logo-on/art-only pairs from the same base. New artwork.mjs and cleanup-editor.mjs modules provide bounded mask selection and local patch compositing. Clean-art uploads and uploaded PNG logos skip unnecessary operations. High/Standard quality selection is shown before consent. Old saved packs remain readable.
+
+The public host still does not call private image endpoints: prepaid checkout and its own authenticated generation service remain prerequisites. Its layout simulation repeats the uploaded artwork, without depending on private reference thumbnails. No SETTY attachments or credentials are included. Original portfolio branding is unchanged.
