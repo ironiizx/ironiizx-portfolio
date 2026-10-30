@@ -14,7 +14,7 @@ export function placement(iw, ih, w, h, crop = {}) {
   return { x: (w - dw) * clamp(crop.x ?? .5, 0, 1), y: (h - dh) * clamp(crop.y ?? .5, 0, 1), w: dw, h: dh };
 }
 export function freshProject() {
-  return { version: VERSION, title: '', brief: '', text: '', color: '#bfff36', original: null, landscape: null, portrait: null, logo: null, clean: false, portraitChecked: false,
+  return { version: VERSION, title: '', brief: '', text: '', color: '#ffda35', original: null, landscape: null, portrait: null, logo: null, clean: false, portraitChecked: false,
     crops: { landscape: { x: .5, y: .5, zoom: 1 }, portrait: { x: .5, y: .5, zoom: 1 } },
     logos: { landscape: { x: .5, y: .8, scale: .58 }, portrait: { x: .5, y: .79, scale: .8 } } };
 }

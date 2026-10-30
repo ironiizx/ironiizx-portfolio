@@ -2,6 +2,12 @@
 
 Open `/studio/index.html`. The portfolio navigation and hero link to this page.
 
+## Studio 10 interface
+
+The workspace now uses a compact source/adaptation panel, a format preview and collapsible controls. Before / after preserves original artwork, Undo image edit restores up to three applied image changes, and the 160px view checks small-size readability. Export review groups the five files and their confirmation steps in one dialog.
+
+The private Thumbnail Insights host also offers AI recomposition for landscape and portrait. Those paid operations remain unavailable in this public host.
+
 ## Available now
 
 The browser-only editor prepares landscape artwork and composite files (1920×1080), portrait artwork and composite files (1440×1920), and a transparent PNG logo (1440×608). It supports independent framing, uploaded transparent logos, a free typographic logo, downloadable project JSON, individual images, a ZIP package and a commission brief. Projects can move between this portfolio and Thumbnail Insights.
@@ -10,7 +16,7 @@ Files remain in browser memory until explicitly downloaded. No images are upload
 
 ## Shared source
 
-`public/tools/epic-studio/{core.mjs,studio.mjs,studio.css}` is the portable Studio Core 1.0.0 snapshot also used by Thumbnail Insights. The component uses Shadow DOM to avoid collisions with portfolio styles. This host uses English, an orange theme, and `mode="public"`.
+`public/tools/epic-studio/{core.mjs,studio.mjs,studio.css}` is the portable Studio Core 1.0.0 snapshot also used by Thumbnail Insights. The component uses Shadow DOM to avoid collisions with portfolio styles. This host uses English, a black/blue theme with yellow action accents, and `mode="public"`. Studio 10 updates the shared UI while retaining the compatible Core 1.0.0 project format.
 
 Keep these three files and the project version synchronized when updating both repositories; there is no live third-party dependency or automatic cross-repository deployment. Future incompatible project changes must increment the project version and provide migration.
 
@@ -25,7 +31,7 @@ Before enabling paid generation here, add server authentication, prepaid orders,
 - `node --check public/tools/epic-studio/studio.mjs`
 - `node --test tests/creator-studio.test.mjs`
 - Shared editor browser QA: landscape/portrait proportions and export workflow; main app tests also cover private generation limits, duplicate requests and storage ownership using simulated provider responses.
-- Desktop and 390px mobile views were inspected. The browser produced the ZIP download link but the cloud browser did not return a downloaded file; full download validation remains pending.
+- Desktop and 390px mobile views were inspected, including before/after, undo, the 160px view and the public prepaid gate. The browser produced the ZIP download link but the cloud browser did not return a downloaded file; full download validation remains pending.
 - No real paid generation request was made during this change.
 
 The existing Express server serves these static files without additional dependencies. Review this change through the Vercel preview associated with the draft PR before merging into `main`.
