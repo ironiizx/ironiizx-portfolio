@@ -52,3 +52,14 @@ The existing Express server serves these static files without additional depende
 Shared creator UI updated to the immersive artwork preview, compact title/action dock, settings on demand, progress notifications and stage recovery. New packs preserve landscape pixels outside selected title regions, adapt portrait from the original reference, and compose logo-on/art-only pairs from the same base. New artwork.mjs and cleanup-editor.mjs modules provide bounded mask selection and local patch compositing. Clean-art uploads and uploaded PNG logos skip unnecessary operations. High/Standard quality selection is shown before consent. Old saved packs remain readable.
 
 The public host still does not call private image endpoints: prepaid checkout and its own authenticated generation service remain prerequisites. Its layout simulation repeats the uploaded artwork, without depending on private reference thumbnails. No SETTY attachments or credentials are included. Original portfolio branding is unchanged.
+
+
+### Studio 13 — Smart portrait
+
+Adds a separate Smart portrait tab: original-specific analysis, visible composition plan, then a portrait generated from the original plus that stored plan. All original text is retained by default, including gameplay counters. Optional title/logo removal retains gameplay labels. Original artwork stays unchanged. The existing Publishing pack and Advanced editor remain available.
+
+The shared modules `portrait-core.mjs`, `portrait.mjs`, `portrait.css` and updated `layout.mjs` are synchronized with Thumbnail Insights. Stage persistence and receipt lookup prevent automatic paid retries. Export is a 1440×1920 JPEG; native provider dimensions are disclosed. A process JSON download includes the plan, image-edit prompt and known costs. The project JSON remains Core 1.0.0; portrait state has a separate IndexedDB record.
+
+This public host stops before either `/api/portrait-plan` or `/api/adapt`. No paid API, authentication, secret or checkout integration is added here. Its own prepaid authenticated backend is still required. Browser QA confirmed zero API calls after clicking Analyze & plan in public mode and no horizontal overflow in a 390px frame. A separate clearly marked owner fixture simulated analysis, generation, export and recovery; no actual provider request was made.
+
+Validation adds four portrait workflow tests. The private host separately tests strict plan validation, source and owner binding, quotas, failures and idempotency. Merge and production Vercel publication remain pending review of draft PR #2.
