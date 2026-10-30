@@ -2,6 +2,16 @@
 
 Open `/studio/index.html`. The portfolio navigation and hero link to this page.
 
+## Studio 11 Layout Generator
+
+Generate pack provides a source/title/logo-choice flow and five coordinated outputs. The private Thumbnail Insights host performs landscape regeneration, portrait recomposition from that regenerated landscape, and logo reconstruction/generation. Uploaded PNG logos skip the third paid call. Original and generated images remain separate until review/apply.
+
+The pipeline stores stage progress in IndexedDB and uses owner-scoped, input-bound request identities plus receipts to recover interrupted work without automatic paid retries. This public host never enters that pipeline or calls the private API: it displays the prepaid-generation boundary and retains the free Manual editor.
+
+Shared portable files now also include `layout.mjs`, `layout.css` and `pack-core.mjs`. Keep all six files synchronized. Core 1.0.0 project JSON remains compatible. The separate latest-pack browser record has its own version.
+
+Validation adds seven pipeline tests (nine portfolio tests total). Browser QA used a clearly marked simulated provider for three-step generation, five previews, review/apply and reload recovery. No real paid image generation was made. Desktop and 390px mobile were checked.
+
 ## Studio 10 interface
 
 The workspace now uses a compact source/adaptation panel, a format preview and collapsible controls. Before / after preserves original artwork, Undo image edit restores up to three applied image changes, and the 160px view checks small-size readability. Export review groups the five files and their confirmation steps in one dialog.
