@@ -6,7 +6,7 @@ import {makeZip,safeName} from './core.mjs';
 import {allowanceView} from './allowance.mjs';
 import {hasUnknownLettering,usableLogoTitle,suggestedLogoTitle} from './logo-title.mjs';
 
-export function installPublishingSet(studio,host,{getJob,save,changed}){
+export function installPublishingSet(studio,host,{getJob,save,changed,runAll}){
  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('./publishing.css',import.meta.url).href;studio.shadowRoot.append(css);
  const section=document.createElement('section');section.className='smart-set';section.hidden=true;
  section.innerHTML=`<div class="set-board" hidden><div class="set-board-heading"><span>02 · YOUR FIVE ASSETS</span><span id="set-ready-count" role="status" aria-live="polite">2 / 5 ready</span></div>
@@ -63,6 +63,7 @@ export function installPublishingSet(studio,host,{getJob,save,changed}){
   const signature=JSON.stringify([job.id,job.steps.portrait.result?.jobId,set?.id,set?.steps.map(s=>s.status),d.frames.landscape.clean,d.frames.portrait.clean,d.frames.landscape.position,d.frames.portrait.position,d.logoMode,d.logo?.src]);if(signature!==previewKey){previewKey=signature;previews(view,signature);}
  }
  async function begin(replaceGenerated=false){
+  if(runAll&&!replaceGenerated)return runAll();
   if(studio.busy)return;const job=getJob();if(!job?.output)return;if(!studio.owner)return studio.notice('AI requires prepaid checkout.');
   let set=job.publishingSet;const failed=set?.steps.some(s=>s.status==='failed')||replaceGenerated;try{if(!set){const d=draft(job);if(d.logoMode!=='uploaded'&&!usableLogoTitle(d.title)){$('#set-title').scrollIntoView({block:'center'});$('#set-title').focus();return studio.notice('Enter the exact logo text first. Your original and portrait stay saved.');}for(const key of ['landscape','portrait']){const f=draft(job).frames[key];if(!f.clean&&!f.regions.length&&!await markText(key))return;}set=createPublishingSet(job,draft(job));}}catch(e){studio.notice(e.message);$('#set-title').focus();return;}
   await studio.status();if(!studio.aiStatus?.configured)return studio.notice('Sign in to your private studio to prepare the set.');

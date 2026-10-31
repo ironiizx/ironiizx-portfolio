@@ -1,3 +1,4 @@
+import {installOneClick} from './one-click.mjs';
 import {inputPng,readImage} from './artwork.mjs';
 import {createPortraitJob,runPortraitStep,resetPortraitStep,portraitUsage} from './portrait-core.mjs';
 import {safeName} from './core.mjs';
@@ -29,7 +30,9 @@ export function installSmartPortrait(studio,before,{restoreSource=true}={}){
  const active=()=>job&&job.source.src===source()?.src&&job.title===studio.p.text.trim()&&job.brief===studio.p.brief.trim()?job:null;
  const make=()=>createPortraitJob({source:source(),title:studio.p.text,brief:studio.p.brief,quality,textMode});
  const changed=()=>studio.sync();
- const publishing=installPublishingSet(studio,section,{getJob:active,save,changed});
+ let oneClick;
+ const publishing=installPublishingSet(studio,section,{getJob:active,save,changed,runAll:()=>oneClick.begin()});
+ oneClick=installOneClick(studio,section,{getJob:active,setJob:value=>job=value,save,changed,source});
  $('#smart-upload').onclick=$('#smart-replace').onclick=()=>$('#file-landscape').click();
  $('.smart-source').ondragover=e=>e.preventDefault();$('.smart-source').ondrop=e=>{e.preventDefault();if(!studio.busy&&e.dataTransfer.files[0])studio.upload('landscape',e.dataTransfer.files[0]);};
  $('#smart-example').onclick=()=>{studio.demo();changed();};
@@ -59,7 +62,7 @@ export function installSmartPortrait(studio,before,{restoreSource=true}={}){
   if(current)for(const selector of ['#smart-title','#smart-brief','#smart-quality','#smart-text'])$(selector).disabled=true;
   const plan=current?.plan?.plan;$('#smart-plan').hidden=!plan;
   if(plan){$('#smart-plan-title').textContent=plan.headline;$('#smart-composition').textContent=plan.composition;$('#smart-style').textContent=plan.style;const elements=$('#smart-elements');elements.replaceChildren();for(const item of plan.elements){const chip=document.createElement('span');chip.textContent=item.name;chip.title=item.preserve;elements.append(chip);}const checks=$('#smart-checks');checks.replaceChildren();for(const item of plan.review){const li=document.createElement('li');li.textContent=item;checks.append(li);}}
-  publishing.refresh();
+  publishing.refresh();oneClick.refresh();
  }
  async function begin(another){
   if(studio.busy||loading)return;if(!source())return $('#file-landscape').click();if(!studio.owner)return studio.notice('AI requires prepaid checkout. Free editing is available in Advanced editor.');
@@ -77,6 +80,6 @@ export function installSmartPortrait(studio,before,{restoreSource=true}={}){
    studio.notice(kind==='plan'?'Composition plan ready. Review it before generating.':'Portrait ready. Generate all 5 to complete the art-only variants and logo.');
   }catch(e){studio.notice(e.message);}finally{clearInterval(timer);timer=null;running=null;studio.lock(false);await studio.status();refresh();}};
  }
- const ready=(async()=>{try{if(studio.owner){const saved=await restore();if(saved?.version===1&&saved.source?.src&&saved.steps?.plan&&saved.steps?.portrait){job=saved;if(restoreSource&&!studio.p.landscape){studio.p.original=studio.p.landscape=job.source;studio.p.text=job.title;studio.p.brief=job.brief;}}}}catch(e){studio.notice(e.message);}finally{loading=false;studio.sync();}})();
- return {section,refresh,ready,download:()=>active()?.output?publishing.exportSet():download(),dispose:()=>{clearInterval(timer);publishing.dispose();}};
+ const ready=(async()=>{try{if(studio.owner){const saved=await restore();if(saved?.version===1&&saved.source?.src&&saved.steps?.plan&&saved.steps?.portrait){job=saved;if(restoreSource&&!studio.p.landscape){studio.p.original=studio.p.landscape=job.source;studio.p.text=job.title;studio.p.brief=job.brief;}}}}catch(e){studio.notice(e.message);}finally{loading=false;studio.sync();oneClick.restore();}})();
+ return {section,refresh,ready,download:()=>active()?.output?publishing.exportSet():download(),dispose:()=>{clearInterval(timer);publishing.dispose();oneClick.dispose();}};
 }

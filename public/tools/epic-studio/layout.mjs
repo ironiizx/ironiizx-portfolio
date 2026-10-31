@@ -31,7 +31,7 @@ export function installLayout(studio,renderFormat){
   $('.heading').before(section);$('.heading').hidden=true;$('#workspace').hidden=true;
   let currentMode='portrait';try{const saved=localStorage.getItem('epic-studio-view');if(['portrait','pack','editor'].includes(saved))currentMode=saved;}catch{}
   const smart=installSmartPortrait(studio,section,{restoreSource:currentMode==='portrait'});
-  const tabs=document.createElement('div');tabs.className='layout-mode';tabs.innerHTML='<button id="mode-portrait">Smart portrait</button><button id="mode-generate">Publishing pack</button><button id="mode-editor">Advanced editor</button>';$('.topbar').after(tabs);
+  const tabs=document.createElement('div');tabs.className='layout-mode';tabs.innerHTML='<button id="mode-portrait">Full publishing set</button><button id="mode-generate">Manual pack</button><button id="mode-editor">Advanced editor</button>';$('.topbar').after(tabs);
   const setMode=value=>{currentMode=value;section.hidden=value!=='pack';smart.section.hidden=value!=='portrait';$('.heading').hidden=value!=='editor';$('#workspace').hidden=value!=='editor';for(const [id,mode] of [['mode-portrait','portrait'],['mode-generate','pack'],['mode-editor','editor']])$('#'+id).setAttribute('aria-pressed',String(value===mode));try{localStorage.setItem('epic-studio-view',value);}catch{}if(value==='editor')studio.sync();else smart.refresh();};
   const showEditor=value=>setMode(value?'editor':'pack');
   $('#mode-portrait').onclick=()=>setMode('portrait');$('#mode-generate').onclick=()=>setMode('pack');$('#mode-editor').onclick=()=>setMode('editor');

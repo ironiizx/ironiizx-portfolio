@@ -80,3 +80,10 @@ The approved Smart portrait and original now appear in a single publishing board
 Browser validation used synthetic artwork and a simulated provider, checked exact dimensions, alpha, protected pixels, overview generation and 390px layout. ZIP preparation passed; the remote download event timed out. No paid calls.
 
 Incomplete sets now explain the missing assets and offer a direct continuation from the board. Unreadable analysis markers are filtered from logo suggestions and old drafts; exact wording is required before setup/provider use when the plan contains no readable title. Public paid generation remains gated.
+
+
+### Studio 17 — one-start full set
+
+Shared UI defaults to Full publishing set with a visible required Logo text field and a single credit confirmation. On the private host the server runs all stages and persists progress; switching browser tabs does not advance or pause AI steps. The client reads a progress stream and restores saved results when visible again. Closing or discarding the page / losing connectivity can still interrupt the hosted request; completed steps can be recovered without automatically repeating paid requests.
+
+The portable UI includes one-click.mjs. This public portfolio still stops at the prepaid gate before any generation request. The private server workflow, D1 migrations, image codec and API credentials are not copied here. Manual pack and Advanced editor remain available. Changes remain in draft PR #2.
