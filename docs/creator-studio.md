@@ -87,3 +87,10 @@ Incomplete sets now explain the missing assets and offer a direct continuation f
 Shared UI defaults to Full publishing set with a visible required Logo text field and a single credit confirmation. On the private host the server runs all stages and persists progress; switching browser tabs does not advance or pause AI steps. The client reads a progress stream and restores saved results when visible again. Closing or discarding the page / losing connectivity can still interrupt the hosted request; completed steps can be recovered without automatically repeating paid requests.
 
 The portable UI includes one-click.mjs. This public portfolio still stops at the prepaid gate before any generation request. The private server workflow, D1 migrations, image codec and API credentials are not copied here. Manual pack and Advanced editor remain available. Changes remain in draft PR #2.
+
+
+### Studio 18 — Obsidian presentation
+
+The portable Studio now uses the selected black/blue Obsidian treatment, matching typography, focused yellow actions, responsive five-asset gallery, individual exports and reviewed ZIP. New project uploads a fresh source and resets old title/layout settings. Manual pack, Advanced editor, progress/recovery, local saves and public prepaid gating are preserved. The portfolio landing page retains its own branding; the owner-only Discover/Compare/Concepts/Library navigation appears only on the private host. No private backend or secrets are included.
+
+Validation: shared tests and module syntax; desktop and 390px browser checks on the private host with a labeled local fixture (no paid calls). Individual asset previews and ZIP preparation work; existing projects remain readable. Changes remain in draft PR #2.

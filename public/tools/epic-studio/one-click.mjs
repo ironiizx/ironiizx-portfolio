@@ -35,7 +35,7 @@ export function installOneClick(studio,section,{getJob,setJob,save,changed,sourc
   $('#pack-budget').textContent=state?'Finished steps are saved. Check & resume never repeats an attempted AI request.':reuse?'Up to 3 image edits + 1 visual analysis · approved portrait reused':'Up to 4 image edits + 2 visual analyses · variable API cost';
   $('.one-click-progress').hidden=!busy&&!state;$('#pack-stage').textContent=state?.stage||'Preparing your five-asset set';$('#pack-message').hidden=!state?.error;$('#pack-message').textContent=state?.error||'';
   $('#pack-background').textContent=state?.status==='blocked'||state?.status==='interrupted'?'Saved results are kept. Check progress before starting a new attempt.':'You can switch tabs. Keep this page open and connected.';
-  section.classList.toggle('pack-running',busy);section.querySelector('.smart-intro h1 em').textContent='Every format.';section.querySelector('.smart-intro>p:last-child').textContent='Two portraits. Two thumbnails. One transparent logo.';
+  section.classList.toggle('pack-running',busy);section.querySelector('.smart-intro h1 em').textContent='Every format.';section.querySelector('.smart-intro>p:last-child').textContent='One project. Five optimized assets.';
   $('#smart-placeholder strong').textContent='Your full publishing set.';$('#smart-placeholder small').textContent='One start → five matching assets';$('#smart-another').hidden=true;
   for(const b of section.querySelectorAll('#set-generate,#set-continue'))if(!complete&&!busy)b.disabled=false;
   if(state||busy){const n=Math.floor((Date.now()-(started||Date.parse(state?.createdAt||new Date().toISOString())))/1000);$('#pack-clock').textContent=Math.floor(n/60)+':'+String(n%60).padStart(2,'0');}
