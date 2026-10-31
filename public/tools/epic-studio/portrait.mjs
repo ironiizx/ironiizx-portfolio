@@ -24,6 +24,7 @@ export function installSmartPortrait(studio,before,{restoreSource=true}={}){
  <section id="smart-plan" class="smart-plan" hidden><p class="eyebrow">YOUR COMPOSITION PLAN</p><h2 id="smart-plan-title"></h2><div id="smart-elements"></div><details><summary>View composition & review checks</summary><p id="smart-composition"></p><p id="smart-style"></p><ul id="smart-checks"></ul></details></section>`;
  before.before(section);
  section.querySelector('.smart-dock').before(section.querySelector('#smart-plan'));
+ section.querySelector('.smart-quiet').prepend(section.querySelector('#smart-download'));section.querySelector('#smart-download').classList.remove('primary');
  const source=()=>studio.p.original||studio.p.landscape;
  const active=()=>job&&job.source.src===source()?.src&&job.title===studio.p.text.trim()&&job.brief===studio.p.brief.trim()?job:null;
  const make=()=>createPortraitJob({source:source(),title:studio.p.text,brief:studio.p.brief,quality,textMode});
@@ -42,6 +43,7 @@ export function installSmartPortrait(studio,before,{restoreSource=true}={}){
   const original=$('#smart-original');original.hidden=!s;if(s&&original.src!==s.src)original.src=s.src;$('#smart-upload').hidden=!!s;$('#smart-replace').hidden=!s;
   const output=$('#smart-output-image');output.hidden=!done;if(done&&output.src!==current.output.src)output.src=current.output.src;$('#smart-placeholder').hidden=done||!!running;$('#smart-loading').hidden=!running;
   section.setAttribute('aria-busy',String(!!running));section.classList.toggle('has-source',!!s);section.classList.toggle('is-generating',!!running);
+  $('.smart-intro h1 em').textContent=done?'Every format.':'A new frame.';$('.smart-intro>p:last-child').textContent=done?'Two portraits. Two thumbnails. One transparent logo.':'A composition plan made for your thumbnail.';
   $('#smart-stage').textContent=running==='plan'?'Analyzing & planning your artwork':running==='portrait'?'Recomposing from your plan':'Preparing…';
   const recover=step&&['sending','uncertain','generated'].includes(step.status),failed=step?.status==='failed';
   $('#smart-go').hidden=done;$('#smart-go').textContent=running?'Working…':loading?'Loading studio…':!s?'Upload thumbnail ↑':recover?'Check & resume':failed?'Start a new attempt':planned?'Generate portrait ↗':'Analyze & plan ↗';
@@ -72,9 +74,9 @@ export function installSmartPortrait(studio,before,{restoreSource=true}={}){
    if(!current||kind==='plan'&&step?.status==='failed'){job=make();current=job;}else if(kind==='portrait'&&(another||step?.status==='failed'))resetPortraitStep(current,'portrait');
    await save(current);running=kind;studio.lock(true);started=Date.now();$('#smart-timer').textContent='0:00 elapsed';timer=setInterval(()=>{const n=Math.floor((Date.now()-started)/1000);$('#smart-timer').textContent=Math.floor(n/60)+':'+String(n%60).padStart(2,'0')+' elapsed';},1000);refresh();
    await runPortraitStep(current,kind,{input:inputPng,save,progress:refresh,lookup:(k,id)=>request((k==='plan'?'/api/portrait-plan':'/api/adapt')+'?receipt='+encodeURIComponent(id)),send:(k,body)=>request(k==='plan'?'/api/portrait-plan':'/api/adapt',body),asset:exportPortrait});
-   studio.notice(kind==='plan'?'Composition plan ready. Review it before generating.':'Portrait ready. Review the image, then download.');
+   studio.notice(kind==='plan'?'Composition plan ready. Review it before generating.':'Portrait ready. Generate all 5 to complete the art-only variants and logo.');
   }catch(e){studio.notice(e.message);}finally{clearInterval(timer);timer=null;running=null;studio.lock(false);await studio.status();refresh();}};
  }
  const ready=(async()=>{try{if(studio.owner){const saved=await restore();if(saved?.version===1&&saved.source?.src&&saved.steps?.plan&&saved.steps?.portrait){job=saved;if(restoreSource&&!studio.p.landscape){studio.p.original=studio.p.landscape=job.source;studio.p.text=job.title;studio.p.brief=job.brief;}}}}catch(e){studio.notice(e.message);}finally{loading=false;studio.sync();}})();
- return {section,refresh,ready,download,dispose:()=>{clearInterval(timer);publishing.dispose();}};
+ return {section,refresh,ready,download:()=>active()?.output?publishing.exportSet():download(),dispose:()=>{clearInterval(timer);publishing.dispose();}};
 }

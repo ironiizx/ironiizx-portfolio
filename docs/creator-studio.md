@@ -72,3 +72,9 @@ Completed Smart portraits now offer five individual downloads and a reviewed ZIP
 The four new `publishing-*`/`publishing.mjs`/`publishing.css` modules work with nested state in the compatible Smart portrait record. Finished results survive reload, uncertain calls use receipts, and invalid/failed outputs require explicit regeneration. Source images are excluded from the process JSON. The public host still cannot invoke paid APIs; private server changes are not included here.
 
 Validation: 28 shared-editor tests pass. A marked simulated provider confirmed three extra edits (no portrait regeneration), five exact-size previews, transparent-logo validation and saved-job recovery with zero new calls. ZIP preparation succeeded; the remote browser download event timed out, so the file transfer remains unverified in that environment. Mobile 390px frame has no horizontal overflow. No actual paid API calls were made. This remains draft PR #2, not merged into production.
+
+## Five-asset result board
+
+The approved Smart portrait and original now appear in a single publishing board: two portraits, two landscape variants and the transparent logo. Generate all 5 guides missing text selections before the existing paid consent. Download overview PNG composes a 2400×1280 review sheet from the actual exports; individual files and the five-file ZIP remain separate. Main Export routes to this set. Reload preserves completed assets and makes no new provider calls. This shared UI retains the public prepaid boundary; the private backend is not copied into the portfolio.
+
+Browser validation used synthetic artwork and a simulated provider, checked exact dimensions, alpha, protected pixels, overview generation and 390px layout. ZIP preparation passed; the remote download event timed out. No paid calls.
