@@ -1,0 +1,57 @@
+import {createPortraitJob} from './portrait-core.mjs';
+import {newRequestId} from './pack-core.mjs';
+import {inputPng,preserveArtwork,readImage} from './artwork.mjs';
+import {setComplete} from './publishing-core.mjs';
+import {usableLogoTitle,suggestedLogoTitle} from './logo-title.mjs';
+import {validateLogo} from './publishing-assets.mjs';
+export async function readPackStream(response,onJob){
+ if(!response.ok){const d=await response.json();throw Error(d.error||'Could not start the pack.');}
+ const reader=response.body.getReader(),decoder=new TextDecoder();let pending='';
+ const line=async raw=>{if(!raw.trim())return;const value=JSON.parse(raw);if(value.error)throw Error(value.error);if(value.job)await onJob(value.job);};
+ while(true){const {value,done}=await reader.read();if(done)break;pending+=decoder.decode(value,{stream:true});let cut;while((cut=pending.indexOf('\n'))>=0){await line(pending.slice(0,cut));pending=pending.slice(cut+1);}if(pending.length>150000)throw Error('Invalid progress response.');}pending+=decoder.decode();await line(pending);
+}
+export function installOneClick(studio,section,{getJob,setJob,save,changed,source}){
+ const $=s=>section.querySelector(s);let busy=false,checking=false,hydrating=false,started=0,titleFor='',disposed=false;
+ section.classList.add('one-click');const dock=document.createElement('section');dock.className='one-click-dock';dock.innerHTML=`<div class="one-click-input"><label for="pack-title">Logo text <span>Required</span></label><input id="pack-title" maxlength="60" placeholder="Exact words in your logo" required><small id="pack-title-help">One confirmation. All five assets.</small></div><button id="pack-all" class="primary">Generate all 5 ↗</button><div class="one-click-progress" hidden><span class="orbit-spinner"></span><div><strong id="pack-stage" role="status" aria-live="polite"></strong><small id="pack-background">You can switch tabs. Keep this page open and connected.</small></div><span id="pack-clock"></span></div><p id="pack-message" role="alert" hidden></p><p id="pack-budget">Up to 4 image edits + 2 visual analyses · variable API cost</p>`;
+ $('.smart-pair').after(dock);const input=$('#pack-title');
+ const req=async id=>{const r=await fetch('/api/publishing-job?id='+encodeURIComponent(id));if(!r.ok){const d=await r.json();const e=Error(d.error||'Could not check saved progress.');e.status=r.status;throw e;}return r.json();};
+ async function asset(id,name){const r=await fetch(`/api/publishing-job?id=${encodeURIComponent(id)}&asset=${name}`);if(!r.ok)throw Error('Your files are saved. Check progress to retrieve them.');const blob=await r.blob();if(blob.size>16000000)throw Error('Saved image is too large.');return {name:name+'.png',src:await new Promise((resolve,reject)=>{const f=new FileReader();f.onload=()=>resolve(f.result);f.onerror=()=>reject(Error('Could not open the image.'));f.readAsDataURL(blob);})};}
+ async function hydrate(job,state){
+  if(hydrating||job.serverHydrated===state.id)return;hydrating=true;
+  try{const portrait=await asset(state.id,'portrait-text'),img=await readImage(portrait.src);if(Math.abs(img.width/img.height-.75)>.005)throw Error('Portrait ratio is invalid.');
+   const output={...portrait,width:1440,height:1920,nativeWidth:img.width,nativeHeight:img.height};const assets={},frames={};
+   for(const [orientation,base] of [['landscape',job.source],['portrait',output]]){const regions=state.areas[orientation];frames[orientation]={regions,clean:!regions.length,position:'bottom'};assets[orientation]=regions.length?await preserveArtwork(base,await asset(state.id,orientation+'-art'),regions):base;}
+   assets.logo=await validateLogo(await asset(state.id,'logo'));
+   job.output=output;job.plan ||= state.steps.plan?.result||null;job.steps.plan.status='done';job.steps.plan.result=job.plan;job.steps.portrait={requestId:state.id+'-portrait',status:'done',result:state.steps.portrait?.result||job.steps.portrait.result||{jobId:state.reusePortrait}};
+   job.setDraft={title:state.title,frames,logoMode:'extract',logo:null};job.publishingSet={version:1,id:state.id,portraitId:job.steps.portrait.result?.jobId,title:state.title,quality:state.quality,brief:state.brief,frames,logoMode:'extract',sources:{landscape:job.source,portrait:output},assets,steps:Object.entries(state.steps).filter(([key])=>['landscape','portraitArt','logo'].includes(key)).map(([key,s])=>({key:key==='portraitArt'?'portrait':key,operation:key==='logo'?'extract':'clean',status:'done',requestId:state.id+'-'+key,result:s.result})),reviewed:false,error:null,createdAt:state.createdAt};job.serverHydrated=state.id;job.error=null;await save(job);changed();studio.notice('All five assets are ready. Review your art-only images and logo.');
+  }finally{hydrating=false;}
+ }
+ async function receive(job,state){job.serverPack=state;await save(job);changed();if(state.status==='completed')await hydrate(job,state);}
+ async function check(){const job=getJob();if(!studio.owner||!job?.serverPack||checking||disposed)return;checking=true;try{await receive(job,await req(job.serverPack.id));}catch(e){if(!busy)studio.notice(e.message);}finally{checking=false;refresh();}}
+ function refresh(){const job=getJob(),state=job?.serverPack,complete=setComplete(job?.publishingSet);dock.hidden=complete&&!busy;const reuse=!!job?.output;
+  if(titleFor!==job?.id){titleFor=job?.id;input.value=state?.title||suggestedLogoTitle(job||{})||'';}
+  input.disabled=busy||!!state;const button=$('#pack-all');button.disabled=busy||hydrating||studio.busy;
+  button.textContent=busy?'Generating your full set…':!source()?'Upload thumbnail ↑':state?'Check & resume saved pack ↻':reuse?'Complete all 5 ↗':'Generate all 5 ↗';
+  $('#pack-budget').textContent=state?'Finished steps are saved. Check & resume never repeats an attempted AI request.':reuse?'Up to 3 image edits + 1 visual analysis · approved portrait reused':'Up to 4 image edits + 2 visual analyses · variable API cost';
+  $('.one-click-progress').hidden=!busy&&!state;$('#pack-stage').textContent=state?.stage||'Preparing your five-asset set';$('#pack-message').hidden=!state?.error;$('#pack-message').textContent=state?.error||'';
+  $('#pack-background').textContent=state?.status==='blocked'||state?.status==='interrupted'?'Saved results are kept. Check progress before starting a new attempt.':'You can switch tabs. Keep this page open and connected.';
+  section.classList.toggle('pack-running',busy);section.querySelector('.smart-intro h1 em').textContent='Every format.';section.querySelector('.smart-intro>p:last-child').textContent='One project. Five optimized assets.';
+  $('#smart-placeholder strong').textContent='Your full publishing set.';$('#smart-placeholder small').textContent='One start → five matching assets';$('#smart-another').hidden=true;
+  for(const b of section.querySelectorAll('#set-generate,#set-continue'))if(!complete&&!busy)b.disabled=false;
+  if(state||busy){const n=Math.floor((Date.now()-(started||Date.parse(state?.createdAt||new Date().toISOString())))/1000);$('#pack-clock').textContent=Math.floor(n/60)+':'+String(n%60).padStart(2,'0');}
+ }
+ async function run(job,body){if(busy)return;busy=true;started=Date.now();studio.lock(true);refresh();try{
+  const response=await fetch('/api/publishing-job',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});await readPackStream(response,state=>receive(job,state));
+  if(job.serverPack?.status==='completed'&&!job.serverHydrated)await hydrate(job,job.serverPack);
+ }catch(e){studio.notice(e.message);$('#pack-message').hidden=false;$('#pack-message').textContent=e.message+' Saved progress can be recovered.';}finally{busy=false;studio.lock(false);await studio.status();changed();}}
+ async function begin(){
+  if(studio.busy||busy)return;if(!source())return studio.$('#file-landscape').click();if(!studio.owner)return studio.notice('Prepaid AI access is required. Free editing is available in Advanced editor.');let job=getJob();
+  if(job?.serverPack){try{const s=await req(job.serverPack.id);await receive(job,s);if(s.status==='completed')return;return run(job,{requestId:s.id,resume:true,consent:true});}catch(e){if(e.status===404&&job.serverPackRequest)return run(job,job.serverPackRequest);studio.notice(e.message);return;}}
+  if(!usableLogoTitle(input.value)){input.setAttribute('aria-invalid','true');input.focus();return studio.notice('Enter the exact words for your logo first.');}input.removeAttribute('aria-invalid');const title=input.value.trim(),reuse=job?.output&&job.steps.portrait.result?.jobId;
+  await studio.status();if(!studio.aiStatus?.configured)return studio.notice('Sign in to your private studio to generate.');const images=reuse?3:4,total=reuse?4:6;if(studio.aiStatus.remaining<images||studio.aiStatus.sharedRemaining<total)return studio.notice(`This pack needs room for ${images} image edits and ${total} total AI requests. Daily allowance resets at 00:00 UTC.`);
+  const d=studio.$('#dialog');d.replaceChildren();const h=document.createElement('h2');h.textContent='Generate all five assets?';const p=document.createElement('p');p.textContent=`Up to ${images} image edits + ${reuse?1:2} visual ${reuse?'analysis':'analyses'}. The entire pack runs after this confirmation. ${reuse?'Your approved portrait is reused.':'The original composition guides the portrait.'}`;const note=document.createElement('p');note.className='muted';note.textContent='Variable API cost. Failed attempts may use credits. Text areas are detected automatically; review the finished art. No automatic paid retries.';const label=document.createElement('label');label.className='check';const consent=document.createElement('input');consent.type='checkbox';label.append(consent,document.createTextNode('Use my API credits for this complete pack.'));const cancel=document.createElement('button');cancel.textContent='Cancel';cancel.onclick=()=>d.close();const go=document.createElement('button');go.className='primary';go.textContent='Generate all 5';go.disabled=true;consent.onchange=()=>go.disabled=!consent.checked;const actions=document.createElement('div');actions.className='dialog-actions';actions.append(cancel,go);d.append(h,p,note,label,actions);d.showModal();
+  go.onclick=async()=>{if(!consent.checked||busy)return;d.close();try{if(!job){studio.p.text=title;job=createPortraitJob({source:source(),title,brief:studio.p.brief,quality:$('#smart-quality').value,textMode:'preserve'});setJob(job);}const id=newRequestId(),image=await inputPng(job.source),body={requestId:id,image,title,brief:job.brief,quality:job.quality,consent:true,...(reuse?{portraitId:reuse}:{})};job.serverPackRequest=body;job.serverPack={id,title,status:'submitting',stage:'Starting your five-asset set',createdAt:new Date().toISOString()};await save(job);await run(job,body);}catch(e){studio.notice(e.message);}};
+ }
+ $('#pack-all').onclick=begin;const onVisible=()=>{if(document.visibilityState==='visible')check();};document.addEventListener('visibilitychange',onVisible);window.addEventListener('online',onVisible);const timer=setInterval(()=>{if(!disposed){refresh();if(document.visibilityState==='visible'&&!busy&&getJob()?.serverPack&&!setComplete(getJob()?.publishingSet))check();}},10000);
+ return {begin,refresh,restore:check,dispose(){disposed=true;clearInterval(timer);document.removeEventListener('visibilitychange',onVisible);window.removeEventListener('online',onVisible);}};
+}
