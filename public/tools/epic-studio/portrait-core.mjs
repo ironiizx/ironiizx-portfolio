@@ -4,9 +4,10 @@ export function createPortraitJob({source,title='',brief='',quality='high',textM
  return {version:1,id,source,title:title.trim(),brief:brief.trim(),quality,textMode,image:null,plan:null,output:null,error:null,steps:{plan:{requestId:id+'-plan',status:'queued',result:null},portrait:{requestId:id+'-portrait',status:'queued',result:null}}};
 }
 export function resetPortraitStep(job,kind){
+ if(job.publishingSet?.steps.some(s=>['sending','uncertain','generated'].includes(s.status)))throw Error('Finish or recover the publishing set before replacing this portrait.');
  const step=job.steps[kind];if(!step||!['done','failed'].includes(step.status))throw Error('Check the pending request before starting another.');
  if(kind==='plan')throw Error('Create a new job to change the plan.');
- job.steps.portrait={requestId:newRequestId(),status:'queued',result:null};job.output=null;job.error=null;
+ job.steps.portrait={requestId:newRequestId(),status:'queued',result:null};job.output=null;job.error=null;delete job.publishingSet;delete job.setDraft;
 }
 export async function runPortraitStep(job,kind,io){
  const step=job.steps[kind];if(!step)throw Error('Unknown portrait stage.');

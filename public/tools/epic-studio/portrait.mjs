@@ -1,6 +1,7 @@
 import {inputPng,readImage} from './artwork.mjs';
 import {createPortraitJob,runPortraitStep,resetPortraitStep,portraitUsage} from './portrait-core.mjs';
 import {safeName} from './core.mjs';
+import {installPublishingSet} from './publishing.mjs';
 async function database(){return new Promise((resolve,reject)=>{const r=indexedDB.open('epic-smart-portrait',1);r.onupgradeneeded=()=>r.result.createObjectStore('jobs');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(Error('Enable browser storage to save portrait progress.'));});}
 async function save(job){const db=await database();try{await new Promise((resolve,reject)=>{const tx=db.transaction('jobs','readwrite');tx.objectStore('jobs').put(job,'latest');tx.oncomplete=resolve;tx.onerror=tx.onabort=()=>reject(Error('Progress could not be saved. Free browser storage before generating.'));});}finally{db.close();}}
 async function restore(){const db=await database();try{return await new Promise((resolve,reject)=>{const r=db.transaction('jobs').objectStore('jobs').get('latest');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}finally{db.close();}}
@@ -27,12 +28,13 @@ export function installSmartPortrait(studio,before,{restoreSource=true}={}){
  const active=()=>job&&job.source.src===source()?.src&&job.title===studio.p.text.trim()&&job.brief===studio.p.brief.trim()?job:null;
  const make=()=>createPortraitJob({source:source(),title:studio.p.text,brief:studio.p.brief,quality,textMode});
  const changed=()=>studio.sync();
+ const publishing=installPublishingSet(studio,section,{getJob:active,save,changed});
  $('#smart-upload').onclick=$('#smart-replace').onclick=()=>$('#file-landscape').click();
  $('.smart-source').ondragover=e=>e.preventDefault();$('.smart-source').ondrop=e=>{e.preventDefault();if(!studio.busy&&e.dataTransfer.files[0])studio.upload('landscape',e.dataTransfer.files[0]);};
  $('#smart-example').onclick=()=>{studio.demo();changed();};
  $('#smart-title').oninput=e=>{studio.p.text=e.target.value;studio.change();};$('#smart-brief').oninput=e=>{studio.p.brief=e.target.value;studio.change();};$('#smart-quality').onchange=e=>quality=e.target.value;$('#smart-text').onchange=e=>textMode=e.target.value;
- $('#smart-start-over').onclick=async()=>{if(studio.busy)return;job=null;await save(null).catch(e=>studio.notice(e.message));changed();$('.smart-settings').open=true;};
- $('#smart-process').onclick=()=>{const current=active();if(!current)return;const record={version:1,title:current.title,brief:current.brief,quality:current.quality,textMode:current.textMode,plan:current.plan,edit:current.steps.portrait.result,export:current.output?{width:1440,height:1920,nativeWidth:current.output.nativeWidth,nativeHeight:current.output.nativeHeight}:null,review:'Human visual review required; no CTR or Epic approval prediction.'};studio.download(new Blob([JSON.stringify(record,null,2)],{type:'application/json'}),safeName(current.title||'portrait')+'-process.json');};
+ $('#smart-start-over').onclick=async()=>{if(studio.busy)return;if(job?.publishingSet?.steps.some(s=>['sending','uncertain','generated'].includes(s.status)))return studio.notice('Finish or recover your publishing set first.');job=null;await save(null).catch(e=>studio.notice(e.message));changed();$('.smart-settings').open=true;};
+ $('#smart-process').onclick=()=>{const current=active();if(!current)return;const record={version:1,title:current.title,brief:current.brief,quality:current.quality,textMode:current.textMode,plan:current.plan,edit:current.steps.portrait.result,publishingSet:publishing.process(),export:current.output?{width:1440,height:1920,nativeWidth:current.output.nativeWidth,nativeHeight:current.output.nativeHeight}:null,review:'Human visual review required; no CTR or Epic approval prediction.'};studio.download(new Blob([JSON.stringify(record,null,2)],{type:'application/json'}),safeName(current.title||'portrait')+'-process.json');};
  const download=async()=>{const current=active();if(!current?.output)return studio.notice('Generate and review your portrait first.');const blob=await(await fetch(current.output.src)).blob();studio.download(blob,safeName(current.title||'portrait')+'-1440x1920.jpg');};$('#smart-download').onclick=download;
  $('#smart-go').onclick=()=>begin(false);$('#smart-another').onclick=()=>begin(true);
  function refresh(){
@@ -55,6 +57,7 @@ export function installSmartPortrait(studio,before,{restoreSource=true}={}){
   if(current)for(const selector of ['#smart-title','#smart-brief','#smart-quality','#smart-text'])$(selector).disabled=true;
   const plan=current?.plan?.plan;$('#smart-plan').hidden=!plan;
   if(plan){$('#smart-plan-title').textContent=plan.headline;$('#smart-composition').textContent=plan.composition;$('#smart-style').textContent=plan.style;const elements=$('#smart-elements');elements.replaceChildren();for(const item of plan.elements){const chip=document.createElement('span');chip.textContent=item.name;chip.title=item.preserve;elements.append(chip);}const checks=$('#smart-checks');checks.replaceChildren();for(const item of plan.review){const li=document.createElement('li');li.textContent=item;checks.append(li);}}
+  publishing.refresh();
  }
  async function begin(another){
   if(studio.busy||loading)return;if(!source())return $('#file-landscape').click();if(!studio.owner)return studio.notice('AI requires prepaid checkout. Free editing is available in Advanced editor.');
@@ -73,5 +76,5 @@ export function installSmartPortrait(studio,before,{restoreSource=true}={}){
   }catch(e){studio.notice(e.message);}finally{clearInterval(timer);timer=null;running=null;studio.lock(false);await studio.status();refresh();}};
  }
  const ready=(async()=>{try{if(studio.owner){const saved=await restore();if(saved?.version===1&&saved.source?.src&&saved.steps?.plan&&saved.steps?.portrait){job=saved;if(restoreSource&&!studio.p.landscape){studio.p.original=studio.p.landscape=job.source;studio.p.text=job.title;studio.p.brief=job.brief;}}}}catch(e){studio.notice(e.message);}finally{loading=false;studio.sync();}})();
- return {section,refresh,ready,download,dispose:()=>clearInterval(timer)};
+ return {section,refresh,ready,download,dispose:()=>{clearInterval(timer);publishing.dispose();}};
 }

@@ -63,3 +63,12 @@ The shared modules `portrait-core.mjs`, `portrait.mjs`, `portrait.css` and updat
 This public host stops before either `/api/portrait-plan` or `/api/adapt`. No paid API, authentication, secret or checkout integration is added here. Its own prepaid authenticated backend is still required. Browser QA confirmed zero API calls after clicking Analyze & plan in public mode and no horizontal overflow in a 390px frame. A separate clearly marked owner fixture simulated analysis, generation, export and recovery; no actual provider request was made.
 
 Validation adds four portrait workflow tests. The private host separately tests strict plan validation, source and owner binding, quotas, failures and idempotency. Merge and production Vercel publication remain pending review of draft PR #2.
+
+
+### Studio 14 — complete the approved portrait
+
+Completed Smart portraits now offer five individual downloads and a reviewed ZIP: landscape with text/art-only 1920×1080, portrait with text/art-only 1440×1920 and transparent logo 1440×608. The with-text outputs reuse the original landscape and approved portrait. Text removal uses selected masks and local patch compositing to protect pixels outside the selection. Portrait cleanup uses a portrait provider canvas. Text-free frames and uploaded PNG logos skip paid steps; text-free frames receive the shared logo only for the with-text output.
+
+The four new `publishing-*`/`publishing.mjs`/`publishing.css` modules work with nested state in the compatible Smart portrait record. Finished results survive reload, uncertain calls use receipts, and invalid/failed outputs require explicit regeneration. Source images are excluded from the process JSON. The public host still cannot invoke paid APIs; private server changes are not included here.
+
+Validation: 28 shared-editor tests pass. A marked simulated provider confirmed three extra edits (no portrait regeneration), five exact-size previews, transparent-logo validation and saved-job recovery with zero new calls. ZIP preparation succeeded; the remote browser download event timed out, so the file transfer remains unverified in that environment. Mobile 390px frame has no horizontal overflow. No actual paid API calls were made. This remains draft PR #2, not merged into production.

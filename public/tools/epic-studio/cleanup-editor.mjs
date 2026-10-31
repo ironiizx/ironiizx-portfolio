@@ -1,9 +1,9 @@
 import {readImage} from './artwork.mjs';
-export async function selectTextRegions(studio,source,initial=[]){
+export async function selectTextRegions(studio,source,initial=[],options={}){
   const image=await readImage(source.src),d=studio.$('#dialog');if(d.open)d.close();
   d.replaceChildren();d.classList.add('cleanup-dialog');
-  const heading=document.createElement('h2');heading.textContent='Select only the text.';
-  const help=document.createElement('p');help.className='muted';help.textContent='Drag a box around each title or logo, including its shadow. Everything outside stays untouched.';
+  const heading=document.createElement('h2');heading.textContent=options.heading||'Select only the text.';
+  const help=document.createElement('p');help.className='muted';help.textContent=options.help||'Drag a box around each title or logo, including its shadow. Everything outside stays untouched.';
   const canvas=document.createElement('canvas');canvas.className='cleanup-canvas';canvas.width=image.width;canvas.height=image.height;canvas.setAttribute('aria-label','Text selection canvas. Drag to mark text, or use the top and bottom title buttons below.');
   const toolbar=document.createElement('div');toolbar.className='cleanup-toolbar';
   const count=document.createElement('span');count.setAttribute('aria-live','polite');
