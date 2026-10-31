@@ -31,3 +31,10 @@ test('asset retrieval and local preservation failures resume without another pro
 test('storage is committed before a provider call and a new portrait invalidates its publishing set',async()=>{
  const j=job(),set=createPublishingSet(j,settings()),p=provider();p.io.save=async()=>{throw Error('Storage full');};await assert.rejects(runPublishingSet(set,p.io),/Storage full/);assert.equal(p.sent.length,0);j.publishingSet=set;j.setDraft=settings();assert.throws(()=>resetPortraitStep(j,'portrait'),/Finish or recover/);set.steps[0].status='done';resetPortraitStep(j,'portrait');assert.equal(j.publishingSet,undefined);assert.equal(j.setDraft,undefined);assert.equal(j.source.src,'original-landscape');
 });
+
+test('unreadable analysis markers cannot become paid logo wording',async()=>{
+ const {usableLogoTitle,suggestedLogoTitle}=await import('../public/tools/epic-studio/logo-title.mjs');
+ for(const title of ['[unreadable]',' [UNREADABLE] ','BEDWARS [unreadable]','[unknown]']){assert.equal(usableLogoTitle(title),false);assert.throws(()=>createPublishingSet(job(),{...settings(),title}),/exact logo text/);}
+ const j={...job(),title:'OLD PROJECT NAME',plan:{plan:{texts:[{role:'logo',text:'[unreadable]'},{role:'title',text:'BEDWARS'}]}}};
+ assert.equal(suggestedLogoTitle(j),'BEDWARS');j.plan.plan.texts.pop();assert.equal(suggestedLogoTitle(j),'');assert.equal(suggestedLogoTitle({title:'MY ISLAND'}),'MY ISLAND');assert.equal(usableLogoTitle('UNKNOWN ARENA'),true);
+});

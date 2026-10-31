@@ -1,5 +1,6 @@
 import {newRequestId} from './pack-core.mjs';
 import {validRegions} from './artwork.mjs';
+import {usableLogoTitle} from './logo-title.mjs';
 
 export const SET_FORMATS=[
  {key:'landscape-text',label:'Landscape · with text',width:1920,height:1080},
@@ -10,7 +11,7 @@ export const SET_FORMATS=[
 ];
 export function createPublishingSet(job,{title,frames,logoMode='extract',logo=null,id=newRequestId()}){
  if(!job?.output?.src||job.steps?.portrait?.status!=='done')throw Error('Finish and review your Smart portrait first.');
- if(!['extract','logo','uploaded'].includes(logoMode)||logoMode==='uploaded'&&!logo?.src||logoMode!=='uploaded'&&!title?.trim())throw Error('Add the exact logo text or upload a transparent logo.');
+ if(!['extract','logo','uploaded'].includes(logoMode)||logoMode==='uploaded'&&!logo?.src||logoMode!=='uploaded'&&!usableLogoTitle(title))throw Error('Add the exact logo text or upload a transparent logo.');
  const sources={landscape:job.source,portrait:job.output},assets={},steps=[];
  for(const key of ['landscape','portrait']){
   const frame=frames[key];if(!frame||!validRegions(frame.regions)||!frame.clean&&!frame.regions.length||!['top','bottom'].includes(frame.position))throw Error('Mark the text in both formats, or confirm that a format has no text.');
